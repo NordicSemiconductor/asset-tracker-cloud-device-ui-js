@@ -40,6 +40,19 @@ jobs:
 
       - run:
           when: on_success
+          name: Publish to GitHub pages
+          working_directory: build
+          command: |
+            git config --global user.email "circle-ci@example.com"
+            git config --global user.name "CircleCI"
+            git init
+            git add -A
+            git commit -m "Update build."
+            git remote add origin https://github.com/bifravst/device-ui.git
+            git push -f origin master:gh-pages
+
+      - run:
+          when: on_success
           name: Upload lockfile
           command: npx greenkeeper-lockfile-upload
 
@@ -47,7 +60,7 @@ jobs:
           when: on_success
           name: Run semantic relase
           command: |
-            npm i semantic-release;
+            npm i semantic-release
             npx semantic-release || true
 
 workflows:
