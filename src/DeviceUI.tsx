@@ -7,11 +7,14 @@ import {
 import logo from './logo.svg'
 import './DeviceUI.scss'
 
-const Slider = ({ label, min, max, endpoint }: {
+const defaultFormatValue = (n: number) => n
+
+const Slider = ({ label, min, max, endpoint, formatValue }: {
 	label: string
 	min: number
 	max: number
 	endpoint: string
+	formatValue?: (v: number) => any
 }) => {
 	const [v, changeV] = useState((max - min) / 2)
 	const [error, setError] = useState()
@@ -28,7 +31,8 @@ const Slider = ({ label, min, max, endpoint }: {
 			onChange={({ target: { value } }) => {
 				const s = parseInt(value, 10)
 				setSliderState(s)
-				changeV(((s / 100) * (max - min)) + min)
+				const v = ((s / 100) * (max - min)) + min
+				changeV((formatValue || defaultFormatValue)(v))
 			}}
 			onMouseUp={() => {
 				fetch(`${endpoint}/update`, {
@@ -99,7 +103,7 @@ export const DeviceUIApp = ({ endpoint }: { endpoint: string }) => <>
 				<dt>DeviceId</dt>
 				<dd>{deviceId}</dd>
 			</dl>
-			<Slider label='batteryVoltage' min={0} max={3.3} endpoint={endpoint}/>
+			<Slider label='bat' min={0} max={3300} formatValue={Math.round} endpoint={endpoint}/>
 		</form>}
 		</Device>
 	</main>
