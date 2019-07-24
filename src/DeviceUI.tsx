@@ -60,7 +60,10 @@ const Slider = ({ label, min, max, endpoint }: {
 	</div>
 }
 
-const DeviceId = ({ endpoint }: { endpoint: string }) => {
+const Device = ({ endpoint, children }: {
+	endpoint: string
+	children: (args: { deviceId: string }) => JSX.Element | null
+}): JSX.Element | null => {
 	const [deviceId, setDeviceId] = useState('')
 	useEffect(() => {
 		fetch(`${endpoint}/id`)
@@ -68,11 +71,11 @@ const DeviceId = ({ endpoint }: { endpoint: string }) => {
 				setDeviceId(await response.text())
 			})
 			.catch(err => console.error(err))
-	})
-	return <dl>
-		<dt>DeviceId</dt>
-		<dd>{deviceId}</dd>
-	</dl>
+	}, [endpoint])
+	if (!deviceId) {
+		return <p>Connecting to {endpoint} ...</p>
+	}
+	return children({ deviceId })
 }
 
 export const DeviceUIApp = ({ endpoint }: { endpoint: string }) => <>
@@ -86,14 +89,18 @@ export const DeviceUIApp = ({ endpoint }: { endpoint: string }) => <>
 					className="d-inline-block align-top"
 					alt="Cat Tracker"
 				/>
-				Cat Tracker Simulator: {endpoint}
+				Cat Tracker Simulator
 			</NavbarBrand>
 		</Navbar>
 	</header>
 	<main>
-		<form>
-			<DeviceId endpoint={endpoint}/>
+		<Device endpoint={endpoint}>{({ deviceId }) => <form>
+			<dl>
+				<dt>DeviceId</dt>
+				<dd>{deviceId}</dd>
+			</dl>
 			<Slider label='batteryVoltage' min={0} max={3.3} endpoint={endpoint}/>
-		</form>
+		</form>}
+		</Device>
 	</main>
 </>
