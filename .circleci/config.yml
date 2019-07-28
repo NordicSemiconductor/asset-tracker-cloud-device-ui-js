@@ -20,7 +20,7 @@ jobs:
           name: Update lockfile
           command: npx greenkeeper-lockfile-update
 
-       - run:
+      - run:
           name: Install dependencies
           command: npm ci --no-audit
 
