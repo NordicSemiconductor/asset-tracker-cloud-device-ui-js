@@ -6,6 +6,8 @@ import { Map } from './Map'
 import { Slider } from './Slider'
 import { updateReported } from './updateReported'
 
+import './DeviceUI.scss'
+
 const Device = ({
 	endpoint,
 	children,
@@ -30,6 +32,10 @@ const Device = ({
 export const DeviceUIApp = ({ endpoint }: { endpoint: string }) => {
 	const [batteryError, setBatterError] = useState()
 	const [gpsError, setGpsError] = useState()
+	const [batteryVoltage, setBatteryVoltage] = useState(0)
+	const [acc, setAcc] = useState({ x: 0, y: 0, z: 0 })
+	const [gps, setGps] = useState({ lat: 0, lng: 0 })
+	const [accError, setAccError] = useState()
 
 	const u = updateReported({ endpoint })
 
@@ -56,35 +62,70 @@ export const DeviceUIApp = ({ endpoint }: { endpoint: string }) => {
 							<dl>
 								<dt>DeviceId</dt>
 								<dd>{deviceId}</dd>
+								<dt>
+									Battery voltage: {batteryVoltage}
+								</dt>
+								<dd>
+									<Slider
+										id="voltage"
+										min={0}
+										max={3300}
+										formatValue={Math.round}
+										onChange={v => {
+											setBatteryVoltage(v)
+											u({
+												property: 'bat',
+												v,
+											}).catch(setBatterError)
+										}}
+									/>
+									{batteryError && (
+										<Alert color="danger">{JSON.stringify(batteryError)}</Alert>
+									)}
+								</dd>
+								<dt>Location</dt>
+								<dd>
+									<Map
+										onPositionChange={({ lat, lng }) => {
+											if (gps.lng !== lng || gps.lng !== lng) {
+												setGps({ lat, lng })
+												u({
+													property: 'gps',
+													v: {
+														lat,
+														lng,
+													},
+												}).catch(setGpsError)
+											}
+										}}
+									/>
+									{gpsError && (
+										<Alert color="danger">{JSON.stringify(gpsError)}</Alert>
+									)}
+								</dd>
+								<dt>Accelerometer: {JSON.stringify([
+									acc.x,
+									acc.y,
+									acc.z
+								])}</dt>
+								<dd>
+									<AccelerometerSlider
+										value={acc}
+										onChange={({ x, y, z }) => {
+											if (acc.x !== x || acc.y !== y || acc.z !== z) {
+												setAcc({ x, y, z })
+												u({
+													property: 'acc',
+													v: [x, y, z],
+												}).catch(setAccError)
+											}
+										}}
+									/>
+									{accError && (
+										<Alert color="danger">{JSON.stringify(accError)}</Alert>
+									)}
+								</dd>
 							</dl>
-							<Slider
-								label="Battery voltage"
-								min={0}
-								max={3300}
-								formatValue={Math.round}
-								onChange={v => {
-									u({
-										property: 'bat',
-										v,
-									}).catch(setBatterError)
-								}}
-							/>
-							{batteryError && (
-								<Alert color="danger">{JSON.stringify(batteryError)}</Alert>
-							)}
-							<Map
-								onPositionChange={({ lat, lng }) => {
-									u({
-										property: 'gps',
-										v: {
-											lat, lng
-										}
-									}).catch(setGpsError)
-								}}
-							/>
-							{gpsError && (
-								<Alert color="danger">{JSON.stringify(gpsError)}</Alert>
-							)}
 						</form>
 					)}
 				</Device>
@@ -92,3 +133,48 @@ export const DeviceUIApp = ({ endpoint }: { endpoint: string }) => {
 		</>
 	)
 }
+
+const AccelerometerSlider = ({
+	onChange,
+	value,
+}: {
+	onChange: (args: { x: number; y: number; z: number }) => void
+	value: { x: number; y: number; z: number }
+}) => <>
+	<Slider
+		id="acc-x"
+		min={0}
+		max={10}
+		value={value.x}
+		onChange={x => {
+			onChange({
+				...value,
+				x,
+			})
+		}}
+	/>
+	<Slider
+		id="acc-y"
+		min={0}
+		max={10}
+		value={value.y}
+		onChange={y => {
+			onChange({
+				...value,
+				y,
+			})
+		}}
+	/>
+	<Slider
+		id="acc-z"
+		min={0}
+		max={10}
+		value={value.z}
+		onChange={z => {
+			onChange({
+				...value,
+				z,
+			})
+		}}
+	/>
+</>

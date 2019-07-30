@@ -17,6 +17,7 @@ export const updateReported = ({ endpoint }: { endpoint: string }) => async ({
 			'Content-Type': 'application/json',
 		},
 	}).then(response => {
+		console.log('updated reported', property, v)
 		if (!response.ok) {
 			throw new Error(`${response.status}: ${response.statusText}`)
 		}
