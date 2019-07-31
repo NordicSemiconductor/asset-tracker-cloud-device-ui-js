@@ -30,12 +30,11 @@ const Device = ({
 }
 
 export const DeviceUIApp = ({ endpoint }: { endpoint: string }) => {
-	const [batteryError, setBatterError] = useState()
-	const [gpsError, setGpsError] = useState()
+	const [error, setError] = useState()
 	const [batteryVoltage, setBatteryVoltage] = useState(0)
+	const [accuracy, setAccuracy] = useState(0)
 	const [acc, setAcc] = useState({ x: 0, y: 0, z: 0 })
 	const [gps, setGps] = useState({ lat: 0, lng: 0 })
-	const [accError, setAccError] = useState()
 
 	const u = updateReported({ endpoint })
 
@@ -59,12 +58,13 @@ export const DeviceUIApp = ({ endpoint }: { endpoint: string }) => {
 				<Device endpoint={endpoint}>
 					{({ deviceId }) => (
 						<form>
+							{error && (
+								<Alert color="danger">{JSON.stringify(error)}</Alert>
+							)}
 							<dl>
 								<dt>DeviceId</dt>
 								<dd>{deviceId}</dd>
-								<dt>
-									Battery voltage: {batteryVoltage}
-								</dt>
+								<dt>Battery voltage: {batteryVoltage}</dt>
 								<dd>
 									<Slider
 										id="voltage"
@@ -76,14 +76,11 @@ export const DeviceUIApp = ({ endpoint }: { endpoint: string }) => {
 											u({
 												property: 'bat',
 												v,
-											}).catch(setBatterError)
+											}).catch(setError)
 										}}
 									/>
-									{batteryError && (
-										<Alert color="danger">{JSON.stringify(batteryError)}</Alert>
-									)}
 								</dd>
-								<dt>Location</dt>
+								<dt>GPS: Position</dt>
 								<dd>
 									<Map
 										onPositionChange={({ lat, lng }) => {
@@ -95,19 +92,27 @@ export const DeviceUIApp = ({ endpoint }: { endpoint: string }) => {
 														lat,
 														lng,
 													},
-												}).catch(setGpsError)
+												}).catch(setError)
 											}
 										}}
 									/>
-									{gpsError && (
-										<Alert color="danger">{JSON.stringify(gpsError)}</Alert>
-									)}
 								</dd>
-								<dt>Accelerometer: {JSON.stringify([
-									acc.x,
-									acc.y,
-									acc.z
-								])}</dt>
+								<dt>GPS Accuracy: {accuracy}</dt>
+								<dd>
+									<Slider
+										id="accuracy"
+										min={0}
+										max={200}
+										onChange={v => {
+											setAccuracy(v)
+											u({
+												property: 'gps',
+												v: { acc: v },
+											}).catch(setError)
+										}}
+									/>
+								</dd>
+								<dt>Accelerometer: {JSON.stringify([acc.x, acc.y, acc.z])}</dt>
 								<dd>
 									<AccelerometerSlider
 										value={acc}
@@ -117,13 +122,10 @@ export const DeviceUIApp = ({ endpoint }: { endpoint: string }) => {
 												u({
 													property: 'acc',
 													v: [x, y, z],
-												}).catch(setAccError)
+												}).catch(setError)
 											}
 										}}
 									/>
-									{accError && (
-										<Alert color="danger">{JSON.stringify(accError)}</Alert>
-									)}
 								</dd>
 							</dl>
 						</form>
@@ -140,41 +142,43 @@ const AccelerometerSlider = ({
 }: {
 	onChange: (args: { x: number; y: number; z: number }) => void
 	value: { x: number; y: number; z: number }
-}) => <>
-	<Slider
-		id="acc-x"
-		min={0}
-		max={10}
-		value={value.x}
-		onChange={x => {
-			onChange({
-				...value,
-				x,
-			})
-		}}
-	/>
-	<Slider
-		id="acc-y"
-		min={0}
-		max={10}
-		value={value.y}
-		onChange={y => {
-			onChange({
-				...value,
-				y,
-			})
-		}}
-	/>
-	<Slider
-		id="acc-z"
-		min={0}
-		max={10}
-		value={value.z}
-		onChange={z => {
-			onChange({
-				...value,
-				z,
-			})
-		}}
-	/>
-</>
+}) => (
+	<>
+		<Slider
+			id="acc-x"
+			min={0}
+			max={10}
+			value={value.x}
+			onChange={x => {
+				onChange({
+					...value,
+					x,
+				})
+			}}
+		/>
+		<Slider
+			id="acc-y"
+			min={0}
+			max={10}
+			value={value.y}
+			onChange={y => {
+				onChange({
+					...value,
+					y,
+				})
+			}}
+		/>
+		<Slider
+			id="acc-z"
+			min={0}
+			max={10}
+			value={value.z}
+			onChange={z => {
+				onChange({
+					...value,
+					z,
+				})
+			}}
+		/>
+	</>
+)
