@@ -36,6 +36,7 @@ export const DeviceUIApp = ({ endpoint }: { endpoint: string }) => {
 	const [acc, setAcc] = useState({ x: 0, y: 0, z: 0 })
 	const [hdg, setHdg] = useState(0)
 	const [spd, setSpd] = useState(0)
+	const [alt, setAlt] = useState(0)
 	const [gps, setGps] = useState({ lat: 0, lng: 0 })
 
 	const u = updateReported({ endpoint })
@@ -140,6 +141,21 @@ export const DeviceUIApp = ({ endpoint }: { endpoint: string }) => {
 											u({
 												property: 'gps',
 												v: { spd: v },
+											}).catch(setError)
+										}}
+									/>
+								</dd>
+								<dt>GPS Altitude: {alt}</dt>
+								<dd>
+									<Slider
+										id="altitude"
+										min={0}
+										max={3000}
+										onChange={v => {
+											setAlt(v)
+											u({
+												property: 'gps',
+												v: { alt: v },
 											}).catch(setError)
 										}}
 									/>
