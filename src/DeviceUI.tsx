@@ -34,6 +34,7 @@ export const DeviceUIApp = ({ endpoint }: { endpoint: string }) => {
 	const [batteryVoltage, setBatteryVoltage] = useState(0)
 	const [accuracy, setAccuracy] = useState(0)
 	const [acc, setAcc] = useState({ x: 0, y: 0, z: 0 })
+	const [hdg, setHdg] = useState(0)
 	const [gps, setGps] = useState({ lat: 0, lng: 0 })
 
 	const u = updateReported({ endpoint })
@@ -108,6 +109,21 @@ export const DeviceUIApp = ({ endpoint }: { endpoint: string }) => {
 											u({
 												property: 'gps',
 												v: { acc: v },
+											}).catch(setError)
+										}}
+									/>
+								</dd>
+								<dt>GPS Heading: {hdg}</dt>
+								<dd>
+									<Slider
+										id="heading"
+										min={0}
+										max={360}
+										onChange={v => {
+											setHdg(v)
+											u({
+												property: 'gps',
+												v: { hdg: v },
 											}).catch(setError)
 										}}
 									/>
