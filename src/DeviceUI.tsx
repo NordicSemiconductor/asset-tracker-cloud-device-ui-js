@@ -35,6 +35,7 @@ export const DeviceUIApp = ({ endpoint }: { endpoint: string }) => {
 	const [accuracy, setAccuracy] = useState(0)
 	const [acc, setAcc] = useState({ x: 0, y: 0, z: 0 })
 	const [hdg, setHdg] = useState(0)
+	const [spd, setSpd] = useState(0)
 	const [gps, setGps] = useState({ lat: 0, lng: 0 })
 
 	const u = updateReported({ endpoint })
@@ -124,6 +125,21 @@ export const DeviceUIApp = ({ endpoint }: { endpoint: string }) => {
 											u({
 												property: 'gps',
 												v: { hdg: v },
+											}).catch(setError)
+										}}
+									/>
+								</dd>
+								<dt>GPS Speed: {spd}</dt>
+								<dd>
+									<Slider
+										id="speed"
+										min={0}
+										max={100}
+										onChange={v => {
+											setSpd(v)
+											u({
+												property: 'gps',
+												v: { spd: v },
 											}).catch(setError)
 										}}
 									/>
