@@ -10,7 +10,7 @@ export const updateReported = ({ endpoint }: { endpoint: string }) => async ({
 		body: JSON.stringify({
 			[property]: {
 				v: v,
-				ts: new Date().toISOString(),
+				ts: new Date().getTime(),
 			},
 		}),
 		headers: {
