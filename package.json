@@ -24,7 +24,7 @@
     "NordicSemiconductor"
   ],
   "author": "Nordic Semiconductor ASA | nordicsemi.no",
-  "license": "MIT",
+  "license": "LICENSE",
   "dependencies": {
     "@material-ui/core": "^4.3.2",
     "@material-ui/icons": "^4.2.1",
