@@ -1,12 +1,28 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Alert, Navbar, NavbarBrand } from 'reactstrap'
 import logo from './logo.svg'
-import './DeviceUI.scss'
 import { Map } from './Map'
 import { Slider } from './Slider'
 import { updateReported } from './updateReported'
+import styled from 'styled-components'
+import { GlobalStyle, Main, mobileBreakpoint } from './Styles'
 
-import './DeviceUI.scss'
+const LogoImg = styled.img`
+	margin-right: 0.25rem;
+`
+
+const DeviceInfoList = styled.dl`
+	dd + dt {
+		margin-top: 1rem;
+	}
+`
+
+const StyledNavbar = styled(Navbar)`
+	@media (min-width: ${mobileBreakpoint}) {
+		max-width: ${mobileBreakpoint};
+		margin: 0 auto;
+	}
+`
 
 const Device = ({
 	endpoint,
@@ -56,10 +72,11 @@ export const DeviceUIApp = ({ endpoint }: { endpoint: string }) => {
 
 	return (
 		<>
+			<GlobalStyle />
 			<header className="bg-light">
-				<Navbar color="light" light>
+				<StyledNavbar color="light" light>
 					<NavbarBrand href="/">
-						<img
+						<LogoImg
 							src={logo}
 							width="30"
 							height="30"
@@ -68,14 +85,14 @@ export const DeviceUIApp = ({ endpoint }: { endpoint: string }) => {
 						/>
 						Cat Tracker Simulator
 					</NavbarBrand>
-				</Navbar>
+				</StyledNavbar>
 			</header>
-			<main>
+			<Main>
 				<Device endpoint={endpoint}>
 					{({ deviceId, config }) => (
 						<form>
 							{error && <Alert color="danger">{JSON.stringify(error)}</Alert>}
-							<dl>
+							<DeviceInfoList>
 								<dt>DeviceId</dt>
 								<dd>{deviceId}</dd>
 								<dt>Config</dt>
@@ -188,11 +205,11 @@ export const DeviceUIApp = ({ endpoint }: { endpoint: string }) => {
 										}}
 									/>
 								</dd>
-							</dl>
+							</DeviceInfoList>
 						</form>
 					)}
 				</Device>
-			</main>
+			</Main>
 		</>
 	)
 }

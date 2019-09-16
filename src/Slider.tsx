@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import './DeviceUI.scss'
 
 const defaultFormatValue = (n: number) => n
 
@@ -9,7 +8,7 @@ export const Slider = ({
 	max,
 	formatValue,
 	onChange,
-	value
+	value,
 }: {
 	id: string
 	min: number

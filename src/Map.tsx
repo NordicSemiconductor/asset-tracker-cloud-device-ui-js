@@ -1,7 +1,10 @@
 import React, { useState, useEffect, createRef } from 'react'
 import { Map as LeafletMap, TileLayer, Marker } from 'react-leaflet'
+import styled from 'styled-components'
 
-import './Map.scss'
+const LeafletContainer = styled(LeafletMap)`
+	height: 450px;
+`
 
 export const Map = ({
 	onPositionChange,
@@ -40,7 +43,7 @@ export const Map = ({
 	}, [hasGeoLocationApi, mapPosition.manual, onPositionChange])
 
 	return (
-		<LeafletMap
+		<LeafletContainer
 			center={[mapPosition.lat, mapPosition.lng]}
 			zoom={zoom}
 			ref={mapRef}
@@ -66,6 +69,6 @@ export const Map = ({
 				url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
 			/>
 			<Marker position={[mapPosition.lat, mapPosition.lng]} />
-		</LeafletMap>
+		</LeafletContainer>
 	)
 }
