@@ -26,28 +26,28 @@
   "author": "Nordic Semiconductor ASA | nordicsemi.no",
   "license": "LICENSE",
   "dependencies": {
-    "@material-ui/core": "^4.8.3",
+    "@material-ui/core": "^4.9.0",
     "@material-ui/icons": "^4.5.1",
     "bootstrap": "^4.4.1",
     "leaflet": "^1.6.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-leaflet": "^2.6.1",
-    "reactstrap": "^8.4.0",
+    "reactstrap": "^8.4.1",
     "styled-components": "^5.0.0",
-    "twemoji": "^12.1.4"
+    "twemoji": "^12.1.5"
   },
   "devDependencies": {
-    "@bifravst/code-style": "^6.0.1",
+    "@bifravst/code-style": "^6.0.2",
     "@commitlint/cli": "^8.3.5",
     "@commitlint/config-angular": "^8.3.4",
     "@types/classnames": "^2.2.9",
     "@types/jest": "^25.1.0",
-    "@types/node": "^13.1.8",
-    "@types/react": "^16.9.17",
-    "@types/react-dom": "^16.9.4",
+    "@types/node": "^13.5.1",
+    "@types/react": "^16.9.19",
+    "@types/react-dom": "^16.9.5",
     "@types/react-leaflet": "^2.5.0",
-    "@types/reactstrap": "^8.4.0",
+    "@types/reactstrap": "^8.4.1",
     "@types/styled-components": "^4.4.2",
     "@types/twemoji": "^12.1.0",
     "babel-eslint": "^10.0.3",
@@ -59,7 +59,7 @@
     "eslint-plugin-react-app": "^6.1.0",
     "eslint-plugin-react-hooks": "^2.3.0",
     "firebase-tools": "^7.12.1",
-    "husky": "^4.0.10",
+    "husky": "^4.2.1",
     "react-scripts": "^3.3.0",
     "typescript": "^3.7.5"
   },
@@ -72,12 +72,10 @@
   "lint-staged": {
     "*.{ts,tsx}": [
       "prettier --write",
-      "eslint --ext .js,.ts,.jsx,.tsx",
-      "git add"
+      "eslint --ext .js,.ts,.jsx,.tsx"
     ],
     "*.{md,json,yaml,yml,html}": [
-      "prettier --write",
-      "git add"
+      "prettier --write"
     ]
   },
   "engines": {
