@@ -34,7 +34,7 @@
     "react-dom": "^16.13.0",
     "react-leaflet": "^2.6.1",
     "reactstrap": "^8.4.1",
-    "styled-components": "^5.0.0",
+    "styled-components": "^5.0.1",
     "twemoji": "^12.1.5"
   },
   "devDependencies": {
