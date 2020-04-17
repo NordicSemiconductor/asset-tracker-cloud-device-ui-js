@@ -4,6 +4,7 @@ import logo from './logo.svg'
 import { Map } from './Map'
 import { Slider } from './Slider'
 import { updateReported } from './updateReported'
+import { sendMessage } from './sendMessage'
 import styled from 'styled-components'
 import { GlobalStyle, Main, mobileBreakpoint } from './Styles'
 
@@ -35,19 +36,19 @@ const Device = ({
 	const [config, setConfig] = useState()
 	useEffect(() => {
 		fetch(`${endpoint}/id`)
-			.then(async response => {
+			.then(async (response) => {
 				setDeviceId(await response.text())
 			})
-			.catch(err => console.error(err))
+			.catch((err) => console.error(err))
 
 		const connection = new WebSocket(endpoint.replace(/^https?/, 'ws'))
 		connection.onopen = () => {
 			console.debug('[ws]', 'open')
 		}
-		connection.onerror = error => {
+		connection.onerror = (error) => {
 			console.error('[ws]', error)
 		}
-		connection.onmessage = message => {
+		connection.onmessage = (message) => {
 			console.debug('[ws]', 'message', message)
 			setConfig(JSON.parse(message.data))
 		}
@@ -69,6 +70,7 @@ export const DeviceUIApp = ({ endpoint }: { endpoint: string }) => {
 	const [gps, setGps] = useState({ lat: 0, lng: 0 })
 
 	const u = updateReported({ endpoint })
+	const m = sendMessage({ endpoint })
 
 	return (
 		<>
@@ -104,7 +106,7 @@ export const DeviceUIApp = ({ endpoint }: { endpoint: string }) => {
 										min={0}
 										max={3300}
 										formatValue={Math.round}
-										onChange={v => {
+										onChange={(v) => {
 											setBatteryVoltage(v)
 											u({
 												property: 'bat',
@@ -136,7 +138,7 @@ export const DeviceUIApp = ({ endpoint }: { endpoint: string }) => {
 										id="accuracy"
 										min={0}
 										max={200}
-										onChange={v => {
+										onChange={(v) => {
 											setAccuracy(v)
 											u({
 												property: 'gps',
@@ -151,7 +153,7 @@ export const DeviceUIApp = ({ endpoint }: { endpoint: string }) => {
 										id="heading"
 										min={0}
 										max={360}
-										onChange={v => {
+										onChange={(v) => {
 											setHdg(v)
 											u({
 												property: 'gps',
@@ -166,7 +168,7 @@ export const DeviceUIApp = ({ endpoint }: { endpoint: string }) => {
 										id="speed"
 										min={0}
 										max={100}
-										onChange={v => {
+										onChange={(v) => {
 											setSpd(v)
 											u({
 												property: 'gps',
@@ -181,7 +183,7 @@ export const DeviceUIApp = ({ endpoint }: { endpoint: string }) => {
 										id="altitude"
 										min={0}
 										max={3000}
-										onChange={v => {
+										onChange={(v) => {
 											setAlt(v)
 											u({
 												property: 'gps',
@@ -205,6 +207,23 @@ export const DeviceUIApp = ({ endpoint }: { endpoint: string }) => {
 										}}
 									/>
 								</dd>
+								<dt>Buttons</dt>
+								<dd>
+									{[...Array(4)].map((_, k) => (
+										<button
+											key={k}
+											type="button"
+											onClick={() => {
+												m({
+													property: 'btn',
+													v: k + 1,
+												}).catch(setError)
+											}}
+										>
+											Button {k + 1}
+										</button>
+									))}
+								</dd>
 							</DeviceInfoList>
 						</form>
 					)}
@@ -227,7 +246,7 @@ const AccelerometerSlider = ({
 			min={0}
 			max={10}
 			value={value.x}
-			onChange={x => {
+			onChange={(x) => {
 				onChange({
 					...value,
 					x,
@@ -239,7 +258,7 @@ const AccelerometerSlider = ({
 			min={0}
 			max={10}
 			value={value.y}
-			onChange={y => {
+			onChange={(y) => {
 				onChange({
 					...value,
 					y,
@@ -251,7 +270,7 @@ const AccelerometerSlider = ({
 			min={0}
 			max={10}
 			value={value.z}
-			onChange={z => {
+			onChange={(z) => {
 				onChange({
 					...value,
 					z,
