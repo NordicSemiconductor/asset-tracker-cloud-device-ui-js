@@ -201,7 +201,7 @@ export const DeviceUIApp = ({ endpoint }: { endpoint: string }) => {
 												setAcc({ x, y, z })
 												u({
 													property: 'acc',
-													v: [x, y, z],
+													v: { x, y, z },
 												}).catch(setError)
 											}
 										}}
