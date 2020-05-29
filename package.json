@@ -31,7 +31,7 @@
     "leaflet": "^1.6.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-leaflet": "^2.6.3",
+    "react-leaflet": "^2.7.0",
     "reactstrap": "^8.4.1",
     "styled-components": "^5.1.0",
     "snyk": "^1.334.0"
