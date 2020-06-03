@@ -2,8 +2,11 @@ import React, { useState, useEffect, createRef } from 'react'
 import { Map as LeafletMap, TileLayer, Marker } from 'react-leaflet'
 import styled from 'styled-components'
 
-const LeafletContainer = styled(LeafletMap)`
+const LeafletContainer = styled.div`
 	height: 450px;
+	.leaflet-container {
+		height: 450px;
+	}
 `
 
 export const Map = ({
@@ -23,7 +26,7 @@ export const Map = ({
 	useEffect(() => {
 		if (hasGeoLocationApi) {
 			navigator.geolocation.getCurrentPosition(
-				position => {
+				(position) => {
 					if (!mapPosition.manual) {
 						setMapPosition({
 							lat: position.coords.latitude,
@@ -43,32 +46,34 @@ export const Map = ({
 	}, [hasGeoLocationApi, mapPosition.manual, onPositionChange])
 
 	return (
-		<LeafletContainer
-			center={[mapPosition.lat, mapPosition.lng]}
-			zoom={zoom}
-			ref={mapRef}
-			onclick={(e: { latlng: { lat: number; lng: number } }) => {
-				setMapPosition({
-					...e.latlng,
-					manual: true,
-				})
-				onPositionChange(e.latlng)
-			}}
-			onzoomend={(e: object) => {
-				if (
-					mapRef.current &&
-					mapRef.current.viewport &&
-					mapRef.current.viewport.zoom
-				) {
-					setZoom(mapRef.current.viewport.zoom)
-				}
-			}}
-		>
-			<TileLayer
-				attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-				url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-			/>
-			<Marker position={[mapPosition.lat, mapPosition.lng]} />
+		<LeafletContainer>
+			<LeafletMap
+				viewport={{
+					center: [mapPosition.lat, mapPosition.lng],
+					zoom,
+				}}
+				zoom={zoom}
+				ref={mapRef}
+				onclick={(e: { latlng: { lat: number; lng: number } }) => {
+					setMapPosition({
+						...e.latlng,
+						manual: true,
+					})
+					onPositionChange(e.latlng)
+				}}
+				onzoomend={(e: object) => {
+					const z = mapRef?.current?.viewport?.zoom ?? 0
+					if (z > 0) {
+						setZoom(z)
+					}
+				}}
+			>
+				<TileLayer
+					attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+					url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+				/>
+				<Marker position={[mapPosition.lat, mapPosition.lng]} />
+			</LeafletMap>
 		</LeafletContainer>
 	)
 }
