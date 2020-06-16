@@ -17,9 +17,11 @@ export const Slider = ({
 	formatValue?: (v: number) => any
 	onChange: (v: number) => any
 }) => {
-	const startValue = value || (max - min) / 2
+	const startValue = value ?? (max - min) / 2
 	const [v, changeV] = useState<number>()
-	const [sliderState, setSliderState] = useState(Math.round(startValue / max))
+	const [sliderState, setSliderState] = useState(
+		Math.round(((startValue - min) / (max - min)) * 100),
+	)
 	return (
 		<input
 			type="range"
@@ -32,13 +34,13 @@ export const Slider = ({
 				const s = parseInt(value, 10)
 				setSliderState(s)
 				const v = (s / 100) * (max - min) + min
-				changeV((formatValue || defaultFormatValue)(v))
+				changeV((formatValue ?? defaultFormatValue)(v))
 			}}
 			onMouseUp={() => {
-				if (v) onChange(v)
+				if (v !== undefined) onChange(v)
 			}}
 			onTouchEnd={() => {
-				if (v) onChange(v)
+				if (v !== undefined) onChange(v)
 			}}
 		/>
 	)

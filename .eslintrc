@@ -1,3 +1,11 @@
 {
-  "extends": ["@bifravst/eslint-config-typescript", "react-app"]
+  "extends": ["@bifravst/eslint-config-typescript", "react-app"],
+  "overrides": [
+    {
+      "files": ["*.tsx"],
+      "rules": {
+        "@typescript-eslint/strict-boolean-expressions": "warn"
+      }
+    }
+  ]
 }

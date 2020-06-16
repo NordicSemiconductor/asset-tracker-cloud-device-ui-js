@@ -30,9 +30,9 @@ const Device = ({
 	children,
 }: {
 	endpoint: string
-	children: (args: { deviceId: string; config: any }) => JSX.Element | null
+	children: (args: { deviceId?: string; config: any }) => JSX.Element | null
 }): JSX.Element | null => {
-	const [deviceId, setDeviceId] = useState('')
+	const [deviceId, setDeviceId] = useState<string>()
 	const [config, setConfig] = useState()
 	useEffect(() => {
 		fetch(`${endpoint}/id`)
@@ -53,14 +53,14 @@ const Device = ({
 			setConfig(JSON.parse(message.data))
 		}
 	}, [endpoint])
-	if (!deviceId) {
+	if (deviceId === undefined) {
 		return <p>Connecting to {endpoint} ...</p>
 	}
 	return children({ deviceId, config })
 }
 
 export const DeviceUIApp = ({ endpoint }: { endpoint: string }) => {
-	const [error, setError] = useState()
+	const [error, setError] = useState<Error>()
 	const [batteryVoltage, setBatteryVoltage] = useState(0)
 	const [accuracy, setAccuracy] = useState(0)
 	const [acc, setAcc] = useState({ x: 0, y: 0, z: 0 })
@@ -68,6 +68,8 @@ export const DeviceUIApp = ({ endpoint }: { endpoint: string }) => {
 	const [spd, setSpd] = useState(0)
 	const [alt, setAlt] = useState(0)
 	const [gps, setGps] = useState({ lat: 0, lng: 0 })
+	const [temp, setTemp] = useState(21)
+	const [hum, setHum] = useState(50)
 
 	const u = updateReported({ endpoint })
 	const m = sendMessage({ endpoint })
@@ -93,7 +95,9 @@ export const DeviceUIApp = ({ endpoint }: { endpoint: string }) => {
 				<Device endpoint={endpoint}>
 					{({ deviceId, config }) => (
 						<form>
-							{error && <Alert color="danger">{JSON.stringify(error)}</Alert>}
+							{error !== undefined && (
+								<Alert color="danger">{JSON.stringify(error)}</Alert>
+							)}
 							<DeviceInfoList>
 								<dt>DeviceId</dt>
 								<dd>{deviceId}</dd>
@@ -106,6 +110,7 @@ export const DeviceUIApp = ({ endpoint }: { endpoint: string }) => {
 										min={0}
 										max={3300}
 										formatValue={Math.round}
+										value={batteryVoltage}
 										onChange={(v) => {
 											setBatteryVoltage(v)
 											u({
@@ -223,6 +228,44 @@ export const DeviceUIApp = ({ endpoint }: { endpoint: string }) => {
 											Button {k + 1}
 										</button>
 									))}
+								</dd>
+								<dt>Temperature: {temp}°C</dt>
+								<dd>
+									<Slider
+										id="temperature"
+										min={-20}
+										max={80}
+										value={temp}
+										formatValue={Math.round}
+										onChange={(v) => {
+											setTemp(v)
+											u({
+												property: 'env',
+												v: {
+													temp: v,
+												},
+											}).catch(setError)
+										}}
+									/>
+								</dd>
+								<dt>Humidity: {hum}%</dt>
+								<dd>
+									<Slider
+										id="humidity"
+										min={0}
+										max={100}
+										value={hum}
+										formatValue={Math.round}
+										onChange={(v) => {
+											setHum(v)
+											u({
+												property: 'env',
+												v: {
+													hum: v,
+												},
+											}).catch(setError)
+										}}
+									/>
 								</dd>
 							</DeviceInfoList>
 						</form>
