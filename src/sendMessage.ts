@@ -1,16 +1,15 @@
+import { Update } from './updateReported'
+
 export const sendMessage = ({ endpoint }: { endpoint: string }) => async ({
 	property,
 	v,
-}: {
-	property: string
-	v: any
-}) =>
+}: Update) =>
 	fetch(`${endpoint}/message`, {
 		method: 'POST',
 		body: JSON.stringify({
 			[property]: {
 				v: v,
-				ts: new Date().getTime(),
+				ts: Date.now(),
 			},
 		}),
 		headers: {
