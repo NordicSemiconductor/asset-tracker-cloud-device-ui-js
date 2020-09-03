@@ -28,7 +28,7 @@
   "author": "Nordic Semiconductor ASA | nordicsemi.no",
   "license": "LICENSE",
   "dependencies": {
-    "leaflet": "1.6.0",
+    "leaflet": "1.7.1",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-leaflet": "2.7.0",
