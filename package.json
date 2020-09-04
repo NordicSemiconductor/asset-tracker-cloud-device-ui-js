@@ -34,7 +34,7 @@
     "react-leaflet": "2.7.0",
     "reactstrap": "8.5.1",
     "snyk": "1.389.0",
-    "styled-components": "5.1.1"
+    "styled-components": "5.2.0"
   },
   "devDependencies": {
     "@bifravst/code-style": "8.0.61",
