@@ -20,7 +20,7 @@ export const UpdateUI = ({
 	endpoint: string
 	updateReported: (u: Update) => void
 	sendMessage: (m: Update) => void
-}) => {
+}): React.ReactNode => {
 	const [batteryVoltage, setBatteryVoltage] = useState(0)
 	const [accuracy, setAccuracy] = useState(0)
 	const [acc, setAcc] = useState({ x: 0, y: 0, z: 0 })
@@ -68,6 +68,10 @@ export const UpdateUI = ({
 											v: {
 												lat,
 												lng,
+												acc: accuracy,
+												hdg,
+												spd,
+												alt,
 											},
 										})
 									}
@@ -82,10 +86,6 @@ export const UpdateUI = ({
 								max={200}
 								onChange={(v) => {
 									setAccuracy(v)
-									u({
-										property: 'gps',
-										v: { acc: v },
-									})
 								}}
 							/>
 						</dd>
@@ -97,10 +97,6 @@ export const UpdateUI = ({
 								max={360}
 								onChange={(v) => {
 									setHdg(v)
-									u({
-										property: 'gps',
-										v: { hdg: v },
-									})
 								}}
 							/>
 						</dd>
@@ -112,10 +108,6 @@ export const UpdateUI = ({
 								max={100}
 								onChange={(v) => {
 									setSpd(v)
-									u({
-										property: 'gps',
-										v: { spd: v },
-									})
 								}}
 							/>
 						</dd>
@@ -127,10 +119,6 @@ export const UpdateUI = ({
 								max={3000}
 								onChange={(v) => {
 									setAlt(v)
-									u({
-										property: 'gps',
-										v: { alt: v },
-									})
 								}}
 							/>
 						</dd>
