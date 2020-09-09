@@ -33,11 +33,11 @@
     "react-dom": "16.13.1",
     "react-leaflet": "2.7.0",
     "reactstrap": "8.5.1",
-    "snyk": "1.392.0",
+    "snyk": "1.392.1",
     "styled-components": "5.2.0"
   },
   "devDependencies": {
-    "@bifravst/code-style": "8.0.66",
+    "@bifravst/code-style": "8.0.70",
     "@commitlint/cli": "9.1.2",
     "@commitlint/config-angular": "9.1.2",
     "@types/classnames": "2.2.10",
