@@ -2,7 +2,7 @@ export type BatchUpdate = Record<string, { v: any; ts: number }[]>
 
 export const batch = ({ endpoint }: { endpoint: string }) => async (
 	update: BatchUpdate,
-) =>
+): Promise<void> =>
 	fetch(`${endpoint}/batch`, {
 		method: 'POST',
 		body: JSON.stringify(update),

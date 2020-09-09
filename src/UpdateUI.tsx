@@ -20,7 +20,7 @@ export const UpdateUI = ({
 	endpoint: string
 	updateReported: (u: Update) => void
 	sendMessage: (m: Update) => void
-}): React.ReactNode => {
+}) => {
 	const [batteryVoltage, setBatteryVoltage] = useState(0)
 	const [accuracy, setAccuracy] = useState(0)
 	const [acc, setAcc] = useState({ x: 0, y: 0, z: 0 })

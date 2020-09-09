@@ -21,7 +21,10 @@ jobs:
           key: ${{ runner.OS }}-build-${{ hashFiles('**/package-lock.json') }}
       - name: Install dependencies
         run: npm ci --no-audit
+      - run: rm -rf node_modules/.cache/eslint-loader
       - name: Build
+        env:
+          EXTEND_ESLINT: true
         run: npm run build
       - name: Semantic release
         continue-on-error: true

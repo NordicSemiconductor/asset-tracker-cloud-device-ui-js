@@ -3,7 +3,7 @@ import { Update } from './updateReported'
 export const sendMessage = ({ endpoint }: { endpoint: string }) => async ({
 	property,
 	v,
-}: Update) =>
+}: Update): Promise<void> =>
 	fetch(`${endpoint}/message`, {
 		method: 'POST',
 		body: JSON.stringify({

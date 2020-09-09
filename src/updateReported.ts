@@ -6,7 +6,7 @@ export type Update = {
 export const updateReported = ({ endpoint }: { endpoint: string }) => async ({
 	property,
 	v,
-}: Update) =>
+}: Update): Promise<void> =>
 	fetch(`${endpoint}/update`, {
 		method: 'POST',
 		body: JSON.stringify({
