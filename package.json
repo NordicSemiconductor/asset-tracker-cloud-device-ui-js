@@ -37,7 +37,7 @@
     "styled-components": "5.2.0"
   },
   "devDependencies": {
-    "@bifravst/code-style": "8.0.85",
+    "@bifravst/code-style": "8.0.86",
     "@commitlint/cli": "11.0.0",
     "@commitlint/config-angular": "11.0.0",
     "@types/classnames": "2.2.10",
