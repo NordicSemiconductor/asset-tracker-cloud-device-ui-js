@@ -29,8 +29,8 @@
   "license": "LICENSE",
   "dependencies": {
     "leaflet": "1.7.1",
-    "react": "16.13.1",
-    "react-dom": "16.13.1",
+    "react": "16.14.0",
+    "react-dom": "16.14.0",
     "react-leaflet": "2.7.0",
     "reactstrap": "8.6.0",
     "snyk": "1.413.3",
