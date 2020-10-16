@@ -33,7 +33,7 @@
     "react-dom": "16.14.0",
     "react-leaflet": "2.7.0",
     "reactstrap": "8.6.0",
-    "snyk": "1.414.0",
+    "snyk": "1.414.1",
     "styled-components": "5.2.0"
   },
   "devDependencies": {
