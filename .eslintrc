@@ -10,6 +10,7 @@
         "@typescript-eslint/strict-boolean-expressions": "off",
         "@typescript-eslint/no-unused-expressions": "off",
         "no-redeclare": "off",
+        "@typescript-eslint/no-redeclare": ["error"],
         "@typescript-eslint/no-use-before-define": "off"
       }
     },

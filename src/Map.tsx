@@ -61,7 +61,7 @@ export const Map = ({
 					})
 					onPositionChange(e.latlng)
 				}}
-				onzoomend={(e: object) => {
+				onzoomend={() => {
 					const z = mapRef?.current?.viewport?.zoom ?? 0
 					if (z > 0) {
 						setZoom(z)
