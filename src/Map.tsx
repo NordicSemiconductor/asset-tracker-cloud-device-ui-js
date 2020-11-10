@@ -1,3 +1,4 @@
+import { LeafletMouseEvent, LeafletEvent, Map as LeafletMap } from 'leaflet'
 import React, { useState, useEffect } from 'react'
 import { MapContainer, TileLayer, Marker, useMapEvents } from 'react-leaflet'
 import styled from 'styled-components'
@@ -10,28 +11,15 @@ const LeafletContainer = styled.div`
 `
 
 const EventHandler = ({
-	setZoom,
-	setMapPosition,
-	onPositionChange,
+	onZoomEnd,
+	onClick,
 }: {
-	setZoom: (z: number) => void
-	setMapPosition: (pos: { lat: number; lng: number; manual: boolean }) => void
-	onPositionChange: (pos: { lat: number; lng: number }) => void
+	onZoomEnd: (args: { event: LeafletEvent; map: LeafletMap }) => void
+	onClick: (args: { event: LeafletMouseEvent; map: LeafletMap }) => void
 }) => {
 	const map = useMapEvents({
-		click: (e: { latlng: { lat: number; lng: number } }) => {
-			setMapPosition({
-				...e.latlng,
-				manual: true,
-			})
-			onPositionChange(e.latlng)
-		},
-		zoomend: () => {
-			const z = map.getZoom() ?? 0
-			if (z > 0) {
-				setZoom(z)
-			}
-		},
+		click: (event) => onClick({ event, map }),
+		zoomend: (event) => onZoomEnd({ event, map }),
 	})
 	return null
 }
@@ -75,9 +63,16 @@ export const Map = ({
 		<LeafletContainer>
 			<MapContainer center={[mapPosition.lat, mapPosition.lng]} zoom={zoom}>
 				<EventHandler
-					setZoom={setZoom}
-					setMapPosition={setMapPosition}
-					onPositionChange={onPositionChange}
+					onZoomEnd={({ map }) => {
+						setZoom(map.getZoom())
+					}}
+					onClick={({ event }) => {
+						setMapPosition({
+							...event.latlng,
+							manual: true,
+						})
+						onPositionChange(event.latlng)
+					}}
 				/>
 				<TileLayer
 					attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
