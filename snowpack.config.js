@@ -14,7 +14,7 @@ module.exports = {
 	},
 	buildOptions: {
 		...(process.env.REACT_APP_DEVICE_UI_DOMAIN_NAME !== undefined && {
-			baseUrl: process.env.REACT_APP_DEVICE_UI_DOMAIN_NAME,
+			baseUrl: `https://${process.env.REACT_APP_DEVICE_UI_DOMAIN_NAME}`,
 		}),
 	},
 }
