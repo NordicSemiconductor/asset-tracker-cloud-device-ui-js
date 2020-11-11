@@ -1,4 +1,4 @@
-process.env.SNOWPACK_PUBLIC_VERSION = process.env.VERSION ?? Date.now()
+process.env.SNOWPACK_PUBLIC_VERSION = process.env.VERSION || Date.now()
 
 module.exports = {
 	mount: {
