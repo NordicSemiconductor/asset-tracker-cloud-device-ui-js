@@ -1,4 +1,11 @@
-import { LeafletMouseEvent, LeafletEvent, Map as LeafletMap } from 'leaflet'
+import Leaflet from 'leaflet'
+import 'leaflet/dist/leaflet.css'
+import marker from 'leaflet/dist/images/marker-icon.png'
+import type {
+	Map as LeafletMap,
+	LeafletMouseEvent,
+	LeafletEvent,
+} from 'leaflet'
 import React, { useState, useEffect } from 'react'
 import { MapContainer, TileLayer, Marker, useMapEvents } from 'react-leaflet'
 import styled from 'styled-components'
@@ -78,7 +85,14 @@ export const Map = ({
 					attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 					url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
 				/>
-				<Marker position={[mapPosition.lat, mapPosition.lng]} />
+				<Marker
+					position={[mapPosition.lat, mapPosition.lng]}
+					icon={Leaflet.icon({
+						iconUrl: marker,
+						iconSize: [25, 41],
+						iconAnchor: [12.5, 41],
+					})}
+				/>
 			</MapContainer>
 		</LeafletContainer>
 	)

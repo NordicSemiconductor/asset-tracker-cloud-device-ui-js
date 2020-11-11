@@ -1,4 +1,4 @@
-import { Update } from './updateReported'
+import type { Update } from './updateReported'
 
 export const sendMessage = ({ endpoint }: { endpoint: string }) => async ({
 	property,

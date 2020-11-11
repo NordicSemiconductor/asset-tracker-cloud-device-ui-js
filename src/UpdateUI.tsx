@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Map } from './Map'
 import { Slider } from './Slider'
-import { Update } from './updateReported'
+import type { Update } from './updateReported'
 import styled from 'styled-components'
 import { AccelerometerSlider } from './AccelerometerSlider'
 import { Device } from './Device'
