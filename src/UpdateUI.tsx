@@ -30,6 +30,7 @@ export const UpdateUI = ({
 	const [gps, setGps] = useState({ lat: 0, lng: 0 })
 	const [temp, setTemp] = useState(21)
 	const [hum, setHum] = useState(50)
+	const [rsrp, setRSRP] = useState(70)
 
 	return (
 		<Device endpoint={endpoint}>
@@ -40,6 +41,25 @@ export const UpdateUI = ({
 						<dd>{deviceId}</dd>
 						<dt>Config</dt>
 						<dd>{JSON.stringify(config)}</dd>
+						<dt>RSRP: -{rsrp}</dt>
+						<dd>
+							<Slider
+								id="rsrp"
+								min={-110}
+								max={-70}
+								value={-rsrp}
+								formatValue={Math.round}
+								onChange={(v) => {
+									setRSRP(-v)
+									u({
+										property: 'roam',
+										v: {
+											rsrp: -v,
+										},
+									})
+								}}
+							/>
+						</dd>
 						<dt>Battery voltage: {batteryVoltage}</dt>
 						<dd>
 							<Slider
