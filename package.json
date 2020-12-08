@@ -47,7 +47,7 @@
     "@snowpack/plugin-react-refresh": "2.3.8",
     "@snowpack/plugin-typescript": "1.1.1",
     "@types/classnames": "2.2.11",
-    "@types/jest": "26.0.16",
+    "@types/jest": "26.0.17",
     "@types/node": "14.14.10",
     "@types/react": "17.0.0",
     "@types/react-dom": "17.0.0",
