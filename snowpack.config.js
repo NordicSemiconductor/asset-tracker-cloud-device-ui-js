@@ -13,8 +13,11 @@ module.exports = {
 		},
 	},
 	buildOptions: {
-		...(process.env.REACT_APP_DEVICE_UI_DOMAIN_NAME !== undefined && {
-			baseUrl: `https://${process.env.REACT_APP_DEVICE_UI_DOMAIN_NAME}`,
+		...(process.env.SNOWPACK_PUBLIC_DEVICE_UI_BASE_URL !== undefined && {
+			baseUrl: `${process.env.SNOWPACK_PUBLIC_DEVICE_UI_BASE_URL.replace(
+				/\/+$/,
+				'',
+			)}/`,
 		}),
 	},
 }

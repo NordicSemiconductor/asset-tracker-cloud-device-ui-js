@@ -1,4 +1,4 @@
-# Device UI Web Application
+# Device Simulator Web Application
 
 [![GitHub Actions](https://github.com/bifravst/device-ui/workflows/Test%20and%20Release/badge.svg)](https://github.com/bifravst/device-ui/actions)
 [![Known Vulnerabilities](https://snyk.io/test/github/bifravst/device-ui/badge.svg)](https://snyk.io/test/github/bifravst/device-ui)
