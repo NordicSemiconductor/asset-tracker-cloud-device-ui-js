@@ -39,7 +39,7 @@
   },
   "devDependencies": {
     "@bifravst/code-style": "8.0.134",
-    "@bifravst/eslint-config-typescript": "5.0.81",
+    "@bifravst/eslint-config-typescript": "5.0.82",
     "@commitlint/cli": "11.0.0",
     "@commitlint/config-angular": "11.0.0",
     "@prefresh/snowpack": "2.2.0",
