@@ -48,7 +48,7 @@
     "@snowpack/plugin-typescript": "1.1.1",
     "@types/classnames": "2.2.11",
     "@types/jest": "26.0.19",
-    "@types/node": "14.14.13",
+    "@types/node": "14.14.14",
     "@types/react": "17.0.0",
     "@types/react-dom": "17.0.0",
     "@types/react-leaflet": "2.5.2",
