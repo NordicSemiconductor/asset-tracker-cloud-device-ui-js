@@ -26,7 +26,7 @@ export const DeviceUIApp = ({ endpoint }: { endpoint: string }) => {
 	const [batchMode, setBatchMode] = useState(false)
 	const [timeLeft, setTimeLeft] = useState<number>()
 	const [, setBatchUpdates] = useState<QueuedUpdate[]>([])
-	const [batchTimeout, setBatchTimeout] = useState<number>()
+	const [batchTimeout, setBatchTimeout] = useState<NodeJS.Timeout>()
 	const [scheduledSendTime, setScheduledSendTime] = useState<number>()
 
 	useEffect(() => {
