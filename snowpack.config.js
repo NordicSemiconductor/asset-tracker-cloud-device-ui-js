@@ -4,11 +4,6 @@ module.exports = {
 	mount: {
 		public: '/',
 		src: '/_dist_',
-		'node_modules/inter-ui/Inter (web)': {
-			url: '/inter',
-			static: true,
-			resolve: false,
-		},
 	},
 	plugins: ['@snowpack/plugin-react-refresh', '@snowpack/plugin-typescript'],
 	packageOptions: {

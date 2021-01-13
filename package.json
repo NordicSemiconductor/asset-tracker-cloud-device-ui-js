@@ -7,7 +7,8 @@
     "build": "snowpack build",
     "test": "echo \"Error: no test specified\" && exit 1",
     "snyk-protect": "snyk protect",
-    "prepare": "npm run snyk-protect"
+    "prepare": "npm run snyk-protect",
+    "postinstall": "cp -rv node_modules/inter-ui/Inter\\ \\(web\\)/* public/inter"
   },
   "repository": {
     "type": "git",
