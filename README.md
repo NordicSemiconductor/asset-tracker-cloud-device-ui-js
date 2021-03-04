@@ -13,13 +13,13 @@ Provides a user interface via a web application to interact with a software Cat
 Tracker running in Node.js.
 
 The software Cat Trackers are provided by the respective cloud flavours of the
-Asset Tracker Cloud Example:
+nRF Asset Tracker:
 
 - [AWS](https://github.com/NordicSemiconductor/asset-tracker-cloud-aws-js)
 - [Azure](https://github.com/NordicSemiconductor/asset-tracker-cloud-azure-js)
 
 > :information_source:
-> [Read the complete Asset Tracker Cloud Example documentation](https://nordicsemiconductor.github.io/asset-tracker-cloud-docs/).
+> [Read the complete nRF Asset Trackertion](https://nordicsemiconductor.github.io/asset-tracker-cloud-docs/).
 
 ## Set up
 
