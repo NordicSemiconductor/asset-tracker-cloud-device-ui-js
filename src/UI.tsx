@@ -1,27 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import { Alert, Navbar, NavbarBrand, Button } from 'reactstrap'
-import logo from './logo.svg'
+import { Alert, Button } from 'reactstrap'
 import { updateReported, Update } from './updateReported'
 import { sendMessage } from './sendMessage'
-import styled from 'styled-components'
-import { GlobalStyle, Main, mobileBreakpoint } from './Styles'
+import { Main } from './Styles'
 import { BatchUpdate, batch } from './batch'
 import { UpdateUI } from './UpdateUI'
-
-const LogoImg = styled.img`
-	margin-right: 0.25rem;
-`
-
-const StyledNavbar = styled(Navbar)`
-	@media (min-width: ${mobileBreakpoint}) {
-		max-width: ${mobileBreakpoint};
-		margin: 0 auto;
-	}
-`
+import { Header } from './Header'
 
 type QueuedUpdate = Update & { ts: number }
 
-export const DeviceUIApp = ({ endpoint }: { endpoint: string }) => {
+export const UI = ({ endpoint }: { endpoint: URL }) => {
 	const [error, setError] = useState<Error>()
 	const [batchMode, setBatchMode] = useState(false)
 	const [timeLeft, setTimeLeft] = useState<number>()
@@ -92,29 +80,16 @@ export const DeviceUIApp = ({ endpoint }: { endpoint: string }) => {
 
 	return (
 		<>
-			<GlobalStyle />
-			<header className="bg-light">
-				<StyledNavbar color="light" light>
-					<NavbarBrand href="/">
-						<LogoImg
-							src={logo}
-							width="30"
-							height="30"
-							className="d-inline-block align-top"
-							alt="Cat Tracker"
-						/>
-						Cat Tracker Simulator
-					</NavbarBrand>
-					<Button
-						onClick={() => setBatchMode((m) => !m)}
-						outline={!batchMode}
-						color={batchMode ? 'warning' : 'secondary'}
-					>
-						Batch mode: {batchMode ? 'on' : 'off'}
-						{timeLeft !== undefined ? ` ${timeLeft}s` : ''}
-					</Button>
-				</StyledNavbar>
-			</header>
+			<Header>
+				<Button
+					onClick={() => setBatchMode((m) => !m)}
+					outline={!batchMode}
+					color={batchMode ? 'warning' : 'secondary'}
+				>
+					Batch mode: {batchMode ? 'on' : 'off'}
+					{timeLeft !== undefined ? ` ${timeLeft}s` : ''}
+				</Button>
+			</Header>
 			<Main>
 				{error !== undefined && (
 					<Alert color="danger">{JSON.stringify(error)}</Alert>

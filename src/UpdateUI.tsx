@@ -17,7 +17,7 @@ export const UpdateUI = ({
 	updateReported: u,
 	sendMessage: m,
 }: {
-	endpoint: string
+	endpoint: URL
 	updateReported: (u: Update) => void
 	sendMessage: (m: Update) => void
 }) => {

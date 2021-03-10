@@ -1,13 +1,15 @@
+import { trimSlash } from './trimSlash'
+
 export type Update = {
 	property: string
 	v: any
 }
 
-export const updateReported = ({ endpoint }: { endpoint: string }) => async ({
+export const updateReported = ({ endpoint }: { endpoint: URL }) => async ({
 	property,
 	v,
 }: Update): Promise<void> =>
-	fetch(`${endpoint}/update`, {
+	fetch(`${trimSlash(endpoint)}/update`, {
 		method: 'POST',
 		body: JSON.stringify({
 			[property]: {
