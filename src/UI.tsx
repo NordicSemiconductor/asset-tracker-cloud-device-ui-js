@@ -1,21 +1,53 @@
 import React, { useEffect, useState } from 'react'
-import { Alert, Button } from 'reactstrap'
+import {
+	Alert,
+	Button,
+	Badge,
+	Form,
+	Input,
+	InputGroup,
+	InputGroupText,
+	Progress,
+} from 'reactstrap'
 import { updateReported, Update } from './updateReported'
 import { sendMessage } from './sendMessage'
 import { Main } from './Styles'
 import { BatchUpdate, batch } from './batch'
 import { UpdateUI } from './UpdateUI'
 import { Header } from './Header'
+import styled from 'styled-components'
 
 type QueuedUpdate = Update & { ts: number }
+
+const StyledBadge = styled(Badge)``
+
+const StyledButton = styled(Button)`
+	${StyledBadge} {
+		margin-left: 0.5rem;
+	}
+`
+
+const StyledInputGroup = styled(InputGroup)`
+	flex-grow: 0;
+	width: 100px !important;
+	margin-right: 0.25rem;
+`
+
+const StyledProgress = styled(Progress)`
+	height: 5px;
+`
 
 export const UI = ({ endpoint }: { endpoint: URL }) => {
 	const [error, setError] = useState<Error>()
 	const [batchMode, setBatchMode] = useState(false)
 	const [timeLeft, setTimeLeft] = useState<number>()
-	const [, setBatchUpdates] = useState<QueuedUpdate[]>([])
+	const [batchUpdates, setBatchUpdates] = useState<QueuedUpdate[]>([])
 	const [batchTimeout, setBatchTimeout] = useState<NodeJS.Timeout>()
 	const [scheduledSendTime, setScheduledSendTime] = useState<number>()
+	const [intervalSeconds, setIntervalSeconds] = useState<number>(1)
+	const [timeoutIntervalSeconds, setTimeoutIntervalSeconds] = useState<number>(
+		1,
+	)
 
 	useEffect(() => {
 		const i = setInterval(() => {
@@ -32,6 +64,7 @@ export const UI = ({ endpoint }: { endpoint: URL }) => {
 	}, [scheduledSendTime])
 
 	const queueUpdate = (update: Update) => {
+		setBatchMode(true)
 		setBatchUpdates((updates) => [
 			...updates,
 			{
@@ -40,10 +73,10 @@ export const UI = ({ endpoint }: { endpoint: URL }) => {
 			},
 		])
 		if (batchTimeout !== undefined) clearTimeout(batchTimeout)
-		setScheduledSendTime(Date.now() + 1000)
+		setScheduledSendTime(Date.now() + intervalSeconds * 1000)
+		setTimeoutIntervalSeconds(intervalSeconds)
 		setBatchTimeout(
 			setTimeout(() => {
-				//
 				setScheduledSendTime(undefined)
 				setBatchUpdates((updates) => {
 					console.log(updates)
@@ -63,7 +96,7 @@ export const UI = ({ endpoint }: { endpoint: URL }) => {
 					batch({ endpoint })(update).catch(setError)
 					return []
 				})
-			}, 1000),
+			}, intervalSeconds * 1000),
 		)
 	}
 
@@ -81,20 +114,52 @@ export const UI = ({ endpoint }: { endpoint: URL }) => {
 	return (
 		<>
 			<Header>
-				<Button
-					onClick={() => setBatchMode((m) => !m)}
-					outline={!batchMode}
-					color={batchMode ? 'warning' : 'secondary'}
-				>
-					Batch mode: {batchMode ? 'on' : 'off'}
-					{timeLeft !== undefined ? ` ${timeLeft}s` : ''}
-				</Button>
+				<Form inline>
+					{batchMode && (
+						<StyledInputGroup>
+							<Input
+								type="number"
+								name="delay"
+								id="delay"
+								step={1}
+								value={intervalSeconds}
+								onChange={({ target: { value } }) =>
+									setIntervalSeconds(Math.round(parseInt(value, 10)))
+								}
+								addon={true}
+							/>
+							<InputGroupText>s</InputGroupText>
+						</StyledInputGroup>
+					)}
+					<StyledButton
+						onClick={() => setBatchMode((m) => !m)}
+						outline={!batchMode}
+						color={batchMode ? 'warning' : 'secondary'}
+					>
+						Batch mode
+						{batchUpdates.length > 0 && (
+							<StyledBadge color="info" pill>
+								{batchUpdates.length}
+							</StyledBadge>
+						)}
+					</StyledButton>
+				</Form>
 			</Header>
+			{timeLeft !== undefined && (
+				<StyledProgress
+					value={Math.round((1 - timeLeft / timeoutIntervalSeconds) * 100)}
+				/>
+			)}
 			<Main>
 				{error !== undefined && (
 					<Alert color="danger">{JSON.stringify(error)}</Alert>
 				)}
-				<UpdateUI endpoint={endpoint} updateReported={u} sendMessage={m} />
+				<UpdateUI
+					endpoint={endpoint}
+					updateReported={u}
+					sendMessage={m}
+					queueUpdate={queueUpdate}
+				/>
 			</Main>
 		</>
 	)
