@@ -19,7 +19,7 @@ nRF Asset Tracker:
 - [Azure](https://github.com/NordicSemiconductor/asset-tracker-cloud-azure-js)
 
 > :information_source:
-> [Read the complete nRF Asset Trackertion](https://nordicsemiconductor.github.io/asset-tracker-cloud-docs/).
+> [Read the complete nRF Asset Tracker documentation](https://nordicsemiconductor.github.io/asset-tracker-cloud-docs/).
 
 ## Set up
 
@@ -30,7 +30,5 @@ nRF Asset Tracker:
     npm start
 
 After executing the above command, copy the connection string printed from
-`node cli connect "<id of your device>"` (e.g.
-`?endpoint=http%3A%2F%2Flocalhost%3A23719`) and append it to the browser
-address. (for example,
-`http://localhost:8080/?endpoint=http%3A%2F%2Flocalhost%3A23719`).
+`npm exec -- @nordicsemiconductor/asset-tracker-cloud-device-simulator-aws "</path/to/certificate.json>"`
+(e.g. `http://localhost:24272`) and provide it in the endpoint input field.
