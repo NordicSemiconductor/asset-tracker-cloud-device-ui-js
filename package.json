@@ -28,7 +28,7 @@
   "license": "LICENSE",
   "dependencies": {
     "bootstrap": "4.6.0",
-    "inter-ui": "3.15.0",
+    "inter-ui": "3.15.1",
     "leaflet": "1.7.1",
     "react": "17.0.1",
     "react-dom": "17.0.1",
