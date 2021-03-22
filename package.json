@@ -30,8 +30,8 @@
     "bootstrap": "4.6.0",
     "inter-ui": "3.15.1",
     "leaflet": "1.7.1",
-    "react": "17.0.1",
-    "react-dom": "17.0.1",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
     "react-leaflet": "3.1.0",
     "reactstrap": "8.9.0",
     "styled-components": "5.2.1"
