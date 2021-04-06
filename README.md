@@ -1,4 +1,4 @@
-# Device Simulator Web Application
+# Device Simulator UI
 
 [![GitHub Actions](https://github.com/NordicSemiconductor/asset-tracker-cloud-device-ui-js/workflows/Test%20and%20Release/badge.svg)](https://github.com/NordicSemiconductor/asset-tracker-cloud-device-ui-js/actions)
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
