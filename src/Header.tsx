@@ -1,5 +1,5 @@
 import React from 'react'
-import { Navbar, NavbarBrand } from 'reactstrap'
+import { Navbar, NavbarBrand, Color } from './bootstrap5'
 import logo from './logo.svg'
 import styled from 'styled-components'
 import { mobileBreakpoint } from './Styles'
@@ -17,7 +17,7 @@ const StyledNavbar = styled(Navbar)`
 
 export const Header = ({ children }: { children?: React.ReactNode }) => (
 	<header className="bg-light">
-		<StyledNavbar color="light" light>
+		<StyledNavbar color={Color.light} light>
 			<NavbarBrand href="/">
 				<LogoImg
 					src={logo}

@@ -1,7 +1,15 @@
 import React, { useState } from 'react'
-import { Button, Form, FormGroup, Label, Input } from 'reactstrap'
+import styled from 'styled-components'
+import { Button, Label, Input, Form } from './bootstrap5'
 import { Header } from './Header'
 import { Main } from './Styles'
+
+const StyledForm = styled(Form)`
+	div {
+		display: flex;
+		gap: 1rem;
+	}
+`
 
 export const SelectEndpoint = ({
 	onEndpoint,
@@ -13,15 +21,15 @@ export const SelectEndpoint = ({
 		<>
 			<Header />
 			<Main>
-				<Form
+				<StyledForm
 					onSubmit={() => {
 						if (endpoint !== undefined) onEndpoint(endpoint)
 					}}
 				>
-					<FormGroup>
-						<Label for="endpoint">
-							Please provide the endpoint of the running device simulator
-						</Label>
+					<Label for="endpoint">
+						Please provide the endpoint of the running device simulator
+					</Label>
+					<div>
 						<Input
 							type="url"
 							name="endpoint"
@@ -30,14 +38,14 @@ export const SelectEndpoint = ({
 							onChange={({ target: { value } }) => {
 								try {
 									setEndpoint(new URL(value))
-								} catch {
+								} catch (err) {
 									// pass
 								}
 							}}
 						/>
-					</FormGroup>
-					<Button disabled={endpoint === undefined}>Connect</Button>
-				</Form>
+						<Button disabled={endpoint === undefined}>Connect</Button>
+					</div>
+				</StyledForm>
 			</Main>
 		</>
 	)

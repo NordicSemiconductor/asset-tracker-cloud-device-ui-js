@@ -3,12 +3,13 @@ import {
 	Alert,
 	Button,
 	Badge,
-	Form,
 	Input,
 	InputGroup,
 	InputGroupText,
 	Progress,
-} from 'reactstrap'
+	Color,
+	Form,
+} from './bootstrap5'
 import { updateReported, Update } from './updateReported'
 import { sendMessage } from './sendMessage'
 import { Main } from './Styles'
@@ -37,6 +38,17 @@ const StyledProgress = styled(Progress)`
 	height: 5px;
 `
 
+const StyledForm = styled(Form)`
+	display: flex;
+	gap: 1rem;
+	button {
+		flex-shrink: 0;
+	}
+	.input-group {
+		width: 125px;
+	}
+`
+
 export const UI = ({ endpoint }: { endpoint: URL }) => {
 	const [error, setError] = useState<Error>()
 	const [batchMode, setBatchMode] = useState(false)
@@ -45,9 +57,8 @@ export const UI = ({ endpoint }: { endpoint: URL }) => {
 	const [batchTimeout, setBatchTimeout] = useState<NodeJS.Timeout>()
 	const [scheduledSendTime, setScheduledSendTime] = useState<number>()
 	const [intervalSeconds, setIntervalSeconds] = useState<number>(1)
-	const [timeoutIntervalSeconds, setTimeoutIntervalSeconds] = useState<number>(
-		1,
-	)
+	const [timeoutIntervalSeconds, setTimeoutIntervalSeconds] =
+		useState<number>(1)
 
 	useEffect(() => {
 		const i = setInterval(() => {
@@ -114,7 +125,7 @@ export const UI = ({ endpoint }: { endpoint: URL }) => {
 	return (
 		<>
 			<Header>
-				<Form inline>
+				<StyledForm>
 					{batchMode && (
 						<StyledInputGroup>
 							<Input
@@ -126,7 +137,6 @@ export const UI = ({ endpoint }: { endpoint: URL }) => {
 								onChange={({ target: { value } }) =>
 									setIntervalSeconds(Math.round(parseInt(value, 10)))
 								}
-								addon={true}
 							/>
 							<InputGroupText>s</InputGroupText>
 						</StyledInputGroup>
@@ -134,16 +144,16 @@ export const UI = ({ endpoint }: { endpoint: URL }) => {
 					<StyledButton
 						onClick={() => setBatchMode((m) => !m)}
 						outline={!batchMode}
-						color={batchMode ? 'warning' : 'secondary'}
+						color={batchMode ? Color.warning : Color.secondary}
 					>
 						Batch mode
 						{batchUpdates.length > 0 && (
-							<StyledBadge color="info" pill>
+							<StyledBadge color={Color.info} pill>
 								{batchUpdates.length}
 							</StyledBadge>
 						)}
 					</StyledButton>
-				</Form>
+				</StyledForm>
 			</Header>
 			{timeLeft !== undefined && (
 				<StyledProgress
@@ -152,7 +162,7 @@ export const UI = ({ endpoint }: { endpoint: URL }) => {
 			)}
 			<Main>
 				{error !== undefined && (
-					<Alert color="danger">{JSON.stringify(error)}</Alert>
+					<Alert color={Color.danger}>{JSON.stringify(error)}</Alert>
 				)}
 				<UpdateUI endpoint={endpoint} updateReported={u} sendMessage={m} />
 			</Main>

@@ -10,6 +10,9 @@ const DeviceInfoList = styled.dl`
 	dd + dt {
 		margin-top: 1rem;
 	}
+	dd input[type='range'] {
+		width: 100%;
+	}
 `
 
 export const UpdateUI = ({
