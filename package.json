@@ -27,7 +27,7 @@
   "author": "Nordic Semiconductor ASA | nordicsemi.no",
   "license": "LICENSE",
   "dependencies": {
-    "bootstrap": "5.0.1",
+    "bootstrap": "5.0.2",
     "inter-ui": "3.19.2",
     "leaflet": "1.7.1",
     "react": "17.0.2",
