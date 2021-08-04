@@ -56,7 +56,7 @@
     "@typescript-eslint/parser": "4.29.0",
     "babel-eslint": "10.1.0",
     "call-bind": "*",
-    "eslint": "7.31.0",
+    "eslint": "7.32.0",
     "eslint-config-react-app": "6.0.0",
     "eslint-plugin-flowtype": "5.9.0",
     "eslint-plugin-import": "2.23.4",
