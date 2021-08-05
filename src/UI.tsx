@@ -11,12 +11,13 @@ import {
 	Form,
 } from './bootstrap5'
 import { updateReported, Update } from './updateReported'
-import { sendMessage } from './sendMessage'
+import { sendSensorMessage } from './sendSensorMessage'
 import { Main } from './Styles'
 import { BatchUpdate, batch } from './batch'
 import { UpdateUI } from './UpdateUI'
 import { Header } from './Header'
 import styled from 'styled-components'
+import { sendMessage } from './sendMessage'
 
 type QueuedUpdate = Update & { ts: number }
 
@@ -116,11 +117,13 @@ export const UI = ({ endpoint }: { endpoint: URL }) => {
 		: (u: Update) => {
 				updateReported({ endpoint })(u).catch(setError)
 		  }
-	const m = batchMode
+	const s = batchMode
 		? queueUpdate
 		: (u: Update) => {
-				sendMessage({ endpoint })(u).catch(setError)
+				sendSensorMessage({ endpoint })(u).catch(setError)
 		  }
+
+	const m = sendMessage({ endpoint })
 
 	return (
 		<>
@@ -164,7 +167,12 @@ export const UI = ({ endpoint }: { endpoint: URL }) => {
 				{error !== undefined && (
 					<Alert color={Color.danger}>{JSON.stringify(error)}</Alert>
 				)}
-				<UpdateUI endpoint={endpoint} updateReported={u} sendMessage={m} />
+				<UpdateUI
+					endpoint={endpoint}
+					updateReported={u}
+					sendSensorMessage={s}
+					sendMessage={m}
+				/>
 			</Main>
 		</>
 	)

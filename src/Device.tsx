@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { trimSlash } from './trimSlash'
 
+export const MessageContext = React.createContext<{
+	messages: {
+		topic: string
+		payload: any
+	}[]
+}>({ messages: [] })
+
 export const Device = ({
 	endpoint,
 	children,
@@ -10,6 +17,12 @@ export const Device = ({
 }): JSX.Element | null => {
 	const [deviceId, setDeviceId] = useState<string>()
 	const [config, setConfig] = useState()
+	const [messages, setMessages] = useState<
+		{
+			topic: string
+			payload: any
+		}[]
+	>([])
 	useEffect(() => {
 		fetch(`${trimSlash(endpoint)}/id`)
 			.then(async (response) => {
@@ -27,12 +40,19 @@ export const Device = ({
 			console.error('[ws]', error)
 		}
 		connection.onmessage = (message) => {
-			console.debug('[ws]', 'message', message)
-			setConfig(JSON.parse(message.data))
+			const data = JSON.parse(message.data)
+			console.debug('[ws]', 'message', data)
+			if ('config' in data) setConfig(data.config)
+			if ('message' in data)
+				setMessages((messages) => [...messages, data.message])
 		}
 	}, [endpoint])
 	if (deviceId === undefined) {
 		return <p>Connecting to {endpoint.toString()} ...</p>
 	}
-	return children({ deviceId, config })
+	return (
+		<MessageContext.Provider value={{ messages }}>
+			{children({ deviceId, config })}
+		</MessageContext.Provider>
+	)
 }
