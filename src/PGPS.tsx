@@ -11,8 +11,13 @@ const Fieldset = styled.fieldset`
 	justify-content: space-between;
 	input {
 		width: 150px;
+		height: 30px;
 	}
 	padding: 0.25rem 0;
+	label {
+		font-weight: normal;
+	}
+	align-items: center;
 `
 
 const FormFooter = styled(Fieldset)`

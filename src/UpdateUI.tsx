@@ -6,6 +6,7 @@ import styled from 'styled-components'
 import { AccelerometerSlider } from './AccelerometerSlider'
 import { Device } from './Device'
 import { PGPS } from './PGPS'
+import { AGPS } from './AGPS'
 
 const DeviceInfoList = styled.dl`
 	dd + dt {
@@ -222,6 +223,7 @@ export const UpdateUI = ({
 						</DeviceInfoList>
 					</form>
 					<PGPS sendMessage={m} />
+					<AGPS sendMessage={m} />
 				</>
 			)}
 		</Device>
