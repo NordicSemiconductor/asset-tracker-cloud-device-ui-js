@@ -8,6 +8,7 @@ import { Device } from './Device'
 import { PGPS } from './PGPS'
 import { AGPS } from './AGPS'
 import * as MccMncList from 'mcc-mnc-list'
+import { NCellMeas } from './NCellMeas'
 
 const DeviceInfoList = styled.dl`
 	dd + dt {
@@ -371,6 +372,7 @@ export const UpdateUI = ({
 						cell={cell ?? 33703719}
 						area={area ?? 12}
 					/>
+					<NCellMeas sendMessage={m} />
 				</>
 			)}
 		</Device>
