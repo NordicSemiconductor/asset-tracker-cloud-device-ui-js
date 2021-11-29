@@ -1,6 +1,5 @@
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
-import { MessageContext } from './Device'
 
 const Headline = styled.h2`
 	font-size: 100%;
@@ -68,7 +67,15 @@ export const NCellMeas = ({
 					<textarea
 						id="report"
 						value={JSON.stringify(report, null, 2)}
-						onChange={({ target: { value } }) => setReport(JSON.parse(value))}
+						onChange={({ target: { value } }) => {
+							try {
+								const r = JSON.parse(value)
+								if (r.ts === undefined) r.ts = Date.now()
+								setReport(r)
+							} catch {
+								// pass
+							}
+						}}
 						rows={10}
 					/>
 				</Fieldset>
