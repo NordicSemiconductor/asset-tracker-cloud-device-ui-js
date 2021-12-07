@@ -36,7 +36,7 @@
     "styled-components": "5.3.3"
   },
   "devDependencies": {
-    "@nordicsemiconductor/asset-tracker-cloud-code-style": "9.2.28",
+    "@nordicsemiconductor/asset-tracker-cloud-code-style": "9.2.29",
     "@prefresh/snowpack": "3.1.2",
     "@snowpack/plugin-babel": "2.1.7",
     "@snowpack/plugin-react-refresh": "2.5.0",
