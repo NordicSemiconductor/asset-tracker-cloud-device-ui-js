@@ -31,7 +31,7 @@ export const UpdateUI = ({
 	const [rsrp, setRSRP] = useState(70)
 	const [nw, setNw] = useState('LTE-M GPS')
 	const [mcc, setMcc] = useState<string>('242')
-	const [mnc, setMnc] = useState<string>('2')
+	const [mnc, setMnc] = useState<string>('02')
 	const [band, setBand] = useState<number>(3)
 	const [cell, setCell] = useState<number>(33703719)
 	const [area, setArea] = useState<number>(12)
@@ -313,7 +313,7 @@ export const UpdateUI = ({
 												v: {
 													nw,
 													band,
-													mccmnc: `${mcc}${mnc}`,
+													mccmnc: `${mcc}${mnc.padStart(2, '0')}`,
 													cell,
 													area,
 													rsrp: -rsrp,
