@@ -1,6 +1,5 @@
 import Leaflet from 'leaflet'
 import 'leaflet/dist/leaflet.css'
-import marker from 'leaflet/dist/images/marker-icon.png'
 import type {
 	Map as LeafletMap,
 	LeafletMouseEvent,
@@ -8,14 +7,6 @@ import type {
 } from 'leaflet'
 import React, { useState, useEffect } from 'react'
 import { MapContainer, TileLayer, Marker, useMapEvents } from 'react-leaflet'
-import styled from 'styled-components'
-
-const LeafletContainer = styled.div`
-	height: 450px;
-	.leaflet-container {
-		height: 450px;
-	}
-`
 
 const EventHandler = ({
 	onZoomEnd,
@@ -67,8 +58,12 @@ export const Map = ({
 	}, [hasGeoLocationApi, mapPosition.manual, onPositionChange])
 
 	return (
-		<LeafletContainer>
-			<MapContainer center={[mapPosition.lat, mapPosition.lng]} zoom={zoom}>
+		<div>
+			<MapContainer
+				center={[mapPosition.lat, mapPosition.lng]}
+				zoom={zoom}
+				style={{ height: '450px' }}
+			>
 				<EventHandler
 					onZoomEnd={({ map }) => {
 						setZoom(map.getZoom())
@@ -88,12 +83,12 @@ export const Map = ({
 				<Marker
 					position={[mapPosition.lat, mapPosition.lng]}
 					icon={Leaflet.icon({
-						iconUrl: marker,
-						iconSize: [25, 41],
-						iconAnchor: [12.5, 41],
+						iconUrl: 'logo.svg',
+						iconSize: [50, 50],
+						iconAnchor: [25, 50],
 					})}
 				/>
 			</MapContainer>
-		</LeafletContainer>
+		</div>
 	)
 }

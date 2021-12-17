@@ -1,31 +1,5 @@
 import React, { useContext, useState } from 'react'
-import styled from 'styled-components'
 import { MessageContext } from './Device'
-
-const Headline = styled.h2`
-	font-size: 100%;
-`
-
-const Fieldset = styled.fieldset`
-	display: flex;
-	justify-content: space-between;
-	input {
-		width: 150px;
-		height: 30px;
-	}
-	padding: 0.25rem 0;
-	label {
-		font-weight: normal;
-	}
-	align-items: center;
-`
-
-const FormFooter = styled(Fieldset)`
-	display: flex;
-	flex-direction: row;
-    justify-content: flex-end;
-}
-`
 
 type Interval = 120 | 240 | 360 | 480
 
@@ -52,12 +26,13 @@ export const PGPS = ({
 	}
 
 	return (
-		<>
-			<form>
-				<Headline>Predicted GPS</Headline>
-				<Fieldset>
+		<form className="card mt-4">
+			<div className="card-header">Predicted GPS</div>
+			<div className="card-body">
+				<div className="mb-3">
 					<label htmlFor="numPredictions">Number of predictions:</label>
 					<input
+						className="form-control"
 						id="numPredictions"
 						type="number"
 						step={1}
@@ -67,12 +42,13 @@ export const PGPS = ({
 							setNumPredictions(parseInt(value, 10))
 						}
 					/>
-				</Fieldset>
-				<Fieldset>
+				</div>
+				<div className="mb-3">
 					<label htmlFor="interval">
 						Time between predictions, in minutes:
 					</label>
 					<input
+						className="form-control"
 						id="interval"
 						type="number"
 						step={120}
@@ -85,25 +61,26 @@ export const PGPS = ({
 							)
 						}
 					/>
-				</Fieldset>
-				<FormFooter>
-					<button
-						type="button"
-						onClick={() => {
-							m({ n: numPredictions, int: interval }, 'pgps/get')
-						}}
-					>
-						Request P-GPS data
-					</button>
-				</FormFooter>
-			</form>
-			{url !== undefined && (
-				<ul>
-					<li>
-						<a href={url.toString()}>{url.toString()}</a>
-					</li>
-				</ul>
-			)}
-		</>
+				</div>
+				{url !== undefined && (
+					<ul>
+						<li>
+							<a href={url.toString()}>{url.toString()}</a>
+						</li>
+					</ul>
+				)}
+			</div>
+			<div className="card-footer d-flex flex-row-reverse">
+				<button
+					type="button"
+					className="btn btn-primary"
+					onClick={() => {
+						m({ n: numPredictions, int: interval }, 'pgps/get')
+					}}
+				>
+					Request P-GPS data
+				</button>
+			</div>
+		</form>
 	)
 }

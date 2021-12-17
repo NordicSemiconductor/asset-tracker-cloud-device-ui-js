@@ -1,6 +1,14 @@
-process.env.SNOWPACK_PUBLIC_VERSION = process.env.VERSION || Date.now()
+import fs from 'fs'
+import path from 'path'
 
-module.exports = {
+const { version } = JSON.parse(
+	fs.readFileSync(path.join(process.cwd(), 'package.json'), 'utf-8'),
+)
+const VERSION = process.env.VERSION ?? version ?? Date.now()
+const PUBLIC_URL = process.env.PUBLIC_URL
+
+/** @type {import("snowpack").SnowpackUserConfig } */
+export default {
 	mount: {
 		public: '/',
 		src: '/_dist_',
@@ -9,15 +17,19 @@ module.exports = {
 	packageOptions: {
 		installTypes: true,
 		env: {
-			SNOWPACK_PUBLIC_VERSION: true,
+			VERSION: true,
 		},
 	},
 	buildOptions: {
-		...(process.env.SNOWPACK_PUBLIC_DEVICE_UI_BASE_URL !== undefined && {
-			baseUrl: `${process.env.SNOWPACK_PUBLIC_DEVICE_UI_BASE_URL.replace(
-				/\/+$/,
-				'',
-			)}/`,
+		...(PUBLIC_URL !== undefined && {
+			baseUrl: `${PUBLIC_URL.replace(/\/+$/, '')}/`,
 		}),
+	},
+	env: {
+		PUBLIC_URL,
+		VERSION,
+	},
+	alias: {
+		components: './src/components',
 	},
 }

@@ -13,7 +13,10 @@
     "jsx": "preserve",
     "noFallthroughCasesInSwitch": true,
     "importsNotUsedAsValues": "error",
-    "baseUrl": "./"
+    "baseUrl": "src",
+    "paths": {
+      "components/*": ["components/*"]
+    }
   },
   "include": ["src", "types"]
 }

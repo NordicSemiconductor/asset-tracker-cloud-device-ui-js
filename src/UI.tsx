@@ -1,54 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import {
-	Alert,
-	Button,
-	Badge,
-	Input,
-	InputGroup,
-	InputGroupText,
-	Progress,
-	Color,
-	Form,
-} from './bootstrap5'
 import { updateReported, Update } from './updateReported'
 import { sendSensorMessage } from './sendSensorMessage'
-import { Main } from './Styles'
 import { BatchUpdate, batch } from './batch'
 import { UpdateUI } from './UpdateUI'
 import { Header } from './Header'
-import styled from 'styled-components'
 import { sendMessage } from './sendMessage'
+import { Progress } from 'components/Progress'
+import classNames from 'classnames'
 
 type QueuedUpdate = Update & { ts: number }
-
-const StyledBadge = styled(Badge)``
-
-const StyledButton = styled(Button)`
-	${StyledBadge} {
-		margin-left: 0.5rem;
-	}
-`
-
-const StyledInputGroup = styled(InputGroup)`
-	flex-grow: 0;
-	width: 100px !important;
-	margin-right: 0.25rem;
-`
-
-const StyledProgress = styled(Progress)`
-	height: 5px;
-`
-
-const StyledForm = styled(Form)`
-	display: flex;
-	gap: 1rem;
-	button {
-		flex-shrink: 0;
-	}
-	.input-group {
-		width: 125px;
-	}
-`
 
 export const UI = ({ endpoint }: { endpoint: URL }) => {
 	const [error, setError] = useState<Error>()
@@ -128,10 +88,11 @@ export const UI = ({ endpoint }: { endpoint: URL }) => {
 	return (
 		<>
 			<Header>
-				<StyledForm>
+				<form>
 					{batchMode && (
-						<StyledInputGroup>
-							<Input
+						<div className="input-group">
+							<input
+								className="form-control"
 								type="number"
 								name="delay"
 								id="delay"
@@ -141,31 +102,37 @@ export const UI = ({ endpoint }: { endpoint: URL }) => {
 									setIntervalSeconds(Math.round(parseInt(value, 10)))
 								}
 							/>
-							<InputGroupText>s</InputGroupText>
-						</StyledInputGroup>
+							<span className="input-group-text">s</span>
+						</div>
 					)}
-					<StyledButton
+					<button
+						type="button"
 						onClick={() => setBatchMode((m) => !m)}
-						outline={!batchMode}
-						color={batchMode ? Color.warning : Color.secondary}
+						className={classNames({
+							btn: true,
+							'btn-warning': batchMode,
+							'btn-outline-secondary': !batchMode,
+						})}
 					>
 						Batch mode
 						{batchUpdates.length > 0 && (
-							<StyledBadge color={Color.info} pill>
+							<span className={'badge badge-primary pill-rounded'}>
 								{batchUpdates.length}
-							</StyledBadge>
+							</span>
 						)}
-					</StyledButton>
-				</StyledForm>
+					</button>
+				</form>
 			</Header>
 			{timeLeft !== undefined && (
-				<StyledProgress
+				<Progress
 					value={Math.round((1 - timeLeft / timeoutIntervalSeconds) * 100)}
 				/>
 			)}
-			<Main>
+			<main className="container mt-4">
 				{error !== undefined && (
-					<Alert color={Color.danger}>{JSON.stringify(error)}</Alert>
+					<div className="alert alert-danger" role="alert">
+						{JSON.stringify(error)}
+					</div>
 				)}
 				<UpdateUI
 					endpoint={endpoint}
@@ -173,7 +140,7 @@ export const UI = ({ endpoint }: { endpoint: URL }) => {
 					sendSensorMessage={s}
 					sendMessage={m}
 				/>
-			</Main>
+			</main>
 		</>
 	)
 }

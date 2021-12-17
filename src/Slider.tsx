@@ -42,6 +42,7 @@ export const Slider = ({
 			onTouchEnd={() => {
 				if (v !== undefined) onChange(v)
 			}}
+			style={{ width: '100%' }}
 		/>
 	)
 }

@@ -1,44 +1,5 @@
 import React, { Fragment, useContext, useState } from 'react'
-import styled from 'styled-components'
 import { MessageContext } from './Device'
-
-const Headline = styled.h2`
-	font-size: 100%;
-`
-
-const Fieldset = styled.fieldset`
-	display: flex;
-	justify-content: space-between;
-	input {
-		width: 150px;
-		height: 30px;
-	}
-	select {
-		width: 150px;
-		height: 30px;
-	}
-	padding: 0.25rem 0;
-	label {
-		font-weight: normal;
-	}
-	align-items: center;
-`
-
-const FieldsetWithCheckboxes = styled(Fieldset)`
-	input {
-		width: auto;
-		height: auto;
-	}
-	flex-direction: column;
-	align-items: flex-start;
-`
-
-const FormFooter = styled(Fieldset)`
-	display: flex;
-	flex-direction: row;
-    justify-content: flex-end;
-}
-`
 
 const AGPSDataTypes = {
 	1: 'UTC parameters',
@@ -70,15 +31,16 @@ export const AGPS = ({
 	const agpsMessages = messages.filter(({ topic }) => topic.endsWith('/agps'))
 
 	return (
-		<>
-			<form>
-				<Headline>Assisted GPS</Headline>
-				<FieldsetWithCheckboxes>
+		<form className="card mt-4">
+			<div className="card-header">Assisted GPS</div>
+			<div className="card-body">
+				<fieldset className="mb-3">
 					{Object.entries(AGPSDataTypes).map(([k, v]) => {
 						const t = parseInt(k, 10)
 						return (
-							<label key={k}>
+							<div className="form-check" key={k}>
 								<input
+									className="form-check-input"
 									type="checkbox"
 									id={`type-${k}`}
 									checked={types.includes(t)}
@@ -88,39 +50,42 @@ export const AGPS = ({
 											return [...new Set([...types, t])]
 										})
 									}}
-								/>{' '}
-								{k}: {v}
-							</label>
+								/>
+								<label className="form-check-label" htmlFor={`type-${k}`}>
+									{v}
+								</label>
+							</div>
 						)
 					})}
-				</FieldsetWithCheckboxes>
-				<FormFooter>
-					<button
-						type="button"
-						onClick={() => {
-							m(
-								{
-									mcc,
-									mnc,
-									cell,
-									area,
-									types: types ?? [1, 2, 3, 4, 6, 7, 8, 9],
-								},
-								'agps/get',
-							)
-						}}
-					>
-						Request A-GPS data
-					</button>
-				</FormFooter>
-			</form>
-			{agpsMessages.length > 0 && (
-				<ul>
-					{agpsMessages.map(({ payload }, k) => (
-						<li key={k}>{payload.length} bytes</li>
-					))}
-				</ul>
-			)}
-		</>
+				</fieldset>
+				{agpsMessages.length > 0 && (
+					<ul>
+						{agpsMessages.map(({ payload }, k) => (
+							<li key={k}>{payload.length} bytes</li>
+						))}
+					</ul>
+				)}
+			</div>
+			<div className="card-footer d-flex flex-row-reverse">
+				<button
+					type="button"
+					className="btn btn-primary"
+					onClick={() => {
+						m(
+							{
+								mcc,
+								mnc,
+								cell,
+								area,
+								types: types ?? [1, 2, 3, 4, 6, 7, 8, 9],
+							},
+							'agps/get',
+						)
+					}}
+				>
+					Request A-GPS data
+				</button>
+			</div>
+		</form>
 	)
 }

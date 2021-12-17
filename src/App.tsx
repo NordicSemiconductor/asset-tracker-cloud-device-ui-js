@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { SelectEndpoint } from './SelectEndpoint'
-import { GlobalStyle } from './Styles'
 import { UI } from './UI'
 
 export const DeviceUIApp = () => {
@@ -19,7 +18,6 @@ export const DeviceUIApp = () => {
 
 	return (
 		<>
-			<GlobalStyle />
 			{endpoint === undefined && <SelectEndpoint onEndpoint={setEndpoint} />}
 			{endpoint && <UI endpoint={endpoint} />}
 		</>

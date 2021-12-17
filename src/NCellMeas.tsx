@@ -1,32 +1,4 @@
 import React, { useState } from 'react'
-import styled from 'styled-components'
-
-const Headline = styled.h2`
-	font-size: 100%;
-`
-
-const Fieldset = styled.fieldset`
-	display: flex;
-	justify-content: space-between;
-	input {
-		width: 150px;
-		height: 30px;
-	}
-	padding: 0.25rem 0;
-	label {
-		font-weight: normal;
-	}
-    align-items: stretch;
-    flex-direction: column;
-}
-`
-
-const FormFooter = styled(Fieldset)`
-	display: flex;
-	flex-direction: row;
-    justify-content: flex-end;
-}
-`
 
 export const NCellMeas = ({
 	sendMessage: m,
@@ -59,13 +31,14 @@ export const NCellMeas = ({
 	})
 
 	return (
-		<>
-			<form>
-				<Headline>Neighbor Cell Measurements</Headline>
-				<Fieldset>
+		<form className="card mt-4">
+			<div className="card-header">Neighbor Cell Measurements</div>
+			<div className="card-body">
+				<div className="mb-3">
 					<label htmlFor="report">Report:</label>
 					<textarea
 						id="report"
+						className="form-control"
 						value={JSON.stringify(report, null, 2)}
 						onChange={({ target: { value } }) => {
 							try {
@@ -78,18 +51,19 @@ export const NCellMeas = ({
 						}}
 						rows={10}
 					/>
-				</Fieldset>
-				<FormFooter>
-					<button
-						type="button"
-						onClick={() => {
-							m(report, 'ncellmeas')
-						}}
-					>
-						Send neighbor cell measurements report
-					</button>
-				</FormFooter>
-			</form>
-		</>
+				</div>
+			</div>
+			<div className="card-footer d-flex flex-row-reverse">
+				<button
+					type="button"
+					className="btn btn-primary"
+					onClick={() => {
+						m(report, 'ncellmeas')
+					}}
+				>
+					Send neighbor cell measurements report
+				</button>
+			</div>
+		</form>
 	)
 }

@@ -1,23 +1,20 @@
 {
-  "extends": ["react-app", "@nordicsemiconductor/eslint-config-asset-tracker-cloud-typescript"],
+  "extends": [
+    "react-app",
+    "@nordicsemiconductor/eslint-config-asset-tracker-cloud-typescript"
+  ],
   "overrides": [
     {
       "files": ["*.tsx"],
       "rules": {
-        "no-undef": "off",
-        "react-hooks/exhaustive-deps": "error",
-        "@typescript-eslint/explicit-module-boundary-types": "off",
-        "@typescript-eslint/strict-boolean-expressions": "off",
-        "@typescript-eslint/no-unused-expressions": "off",
-        "no-redeclare": "off",
-        "@typescript-eslint/no-redeclare": ["error"],
-        "@typescript-eslint/no-use-before-define": "off"
+        "@typescript-eslint/explicit-module-boundary-types": "off"
       }
     },
     {
-      "files": ["*.ts"],
+      "files": ["*.d.ts"],
       "rules": {
-        "no-undef": "off"
+        "@typescript-eslint/consistent-type-definitions": "off",
+        "@typescript-eslint/ban-types": "off"
       }
     }
   ]
