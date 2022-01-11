@@ -1,7 +1,7 @@
 {
   "name": "@nordicsemiconductor/asset-tracker-cloud-device-ui",
   "version": "0.0.0-development",
-  "description": "Web app to simulate a Cat Tracker",
+  "description": "Provides a user interface via a web application to interact with a simulated device for the nRF Asset Tracker.",
   "type": "module",
   "scripts": {
     "start": "snowpack dev",
@@ -18,10 +18,10 @@
   },
   "homepage": "https://github.com/NordicSemiconductor/asset-tracker-cloud-device-ui-js#readme",
   "keywords": [
-    "Cloud",
-    "IoT",
-    "nRF Asset Tracker",
-    "Nordic Semiconductor"
+    "nrf-asset-tracker",
+    "iot",
+    "web-app",
+    "device-simulator"
   ],
   "author": "Nordic Semiconductor ASA | nordicsemi.no",
   "license": "LICENSE",
