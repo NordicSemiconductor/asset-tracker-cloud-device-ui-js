@@ -1,12 +1,12 @@
+import * as MccMncList from 'mcc-mnc-list'
 import React, { useState } from 'react'
+import { AGPS } from './AGPS'
+import { Device } from './Device'
 import { Map } from './Map'
+import { NCellMeas } from './NCellMeas'
+import { PGPS } from './PGPS'
 import { Slider } from './Slider'
 import type { Update } from './updateReported'
-import { Device } from './Device'
-import { PGPS } from './PGPS'
-import { AGPS } from './AGPS'
-import * as MccMncList from 'mcc-mnc-list'
-import { NCellMeas } from './NCellMeas'
 
 export const UpdateUI = ({
 	endpoint,
@@ -27,6 +27,7 @@ export const UpdateUI = ({
 	const [location, setLocation] = useState({ lat: 0, lng: 0 })
 	const [temp, setTemp] = useState(21)
 	const [hum, setHum] = useState(50)
+	const [atmp, setAtmp] = useState(1030)
 	const [rsrp, setRSRP] = useState(70)
 	const [nw, setNw] = useState('LTE-M GPS')
 	const [mcc, setMcc] = useState<string>('242')
@@ -98,7 +99,7 @@ export const UpdateUI = ({
 											}}
 										/>
 									</div>
-									<div>
+									<div className="mb-3">
 										<label htmlFor="humidity">Humidity: {hum}%</label>
 										<Slider
 											id="humidity"
@@ -117,6 +118,20 @@ export const UpdateUI = ({
 											}}
 										/>
 									</div>
+									<div>
+										<label htmlFor="barometric_pressure">
+											Barometric Pressure: {atmp} hPa
+										</label>
+										<Slider
+											id="barometric_pressure"
+											min={850}
+											max={1100}
+											value={atmp}
+											onChange={(v) => {
+												setAtmp(v)
+											}}
+										/>
+									</div>
 								</div>
 								<div className="card-footer d-flex flex-row-reverse">
 									<button
@@ -128,6 +143,7 @@ export const UpdateUI = ({
 												v: {
 													hum,
 													temp,
+													atmp,
 												},
 											})
 										}}
