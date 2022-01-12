@@ -143,7 +143,7 @@ export const UpdateUI = ({
 												v: {
 													hum,
 													temp,
-													atmp,
+													atmp: atmp / 10, // device reports in kPa
 												},
 											})
 										}}
