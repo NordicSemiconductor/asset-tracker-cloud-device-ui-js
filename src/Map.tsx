@@ -1,12 +1,12 @@
+import type {
+	LeafletEvent,
+	LeafletMouseEvent,
+	Map as LeafletMap,
+} from 'leaflet'
 import Leaflet from 'leaflet'
 import 'leaflet/dist/leaflet.css'
-import type {
-	Map as LeafletMap,
-	LeafletMouseEvent,
-	LeafletEvent,
-} from 'leaflet'
-import React, { useState, useEffect } from 'react'
-import { MapContainer, TileLayer, Marker, useMapEvents } from 'react-leaflet'
+import React, { useEffect, useState } from 'react'
+import { MapContainer, Marker, TileLayer, useMapEvents } from 'react-leaflet'
 
 const EventHandler = ({
 	onZoomEnd,
@@ -83,7 +83,7 @@ export const Map = ({
 				<Marker
 					position={[mapPosition.lat, mapPosition.lng]}
 					icon={Leaflet.icon({
-						iconUrl: 'logo.svg',
+						iconUrl: '/logo.svg',
 						iconSize: [50, 50],
 						iconAnchor: [25, 50],
 					})}

@@ -1,5 +1,5 @@
 import React from 'react'
-import logo from './logo.svg'
+import logo from '/logo.svg'
 
 export const Header = ({ children }: { children?: React.ReactNode }) => (
 	<header className="bg-light">

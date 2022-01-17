@@ -1,12 +1,14 @@
+import classNames from 'classnames'
+import { Progress } from 'components/Progress'
 import React, { useEffect, useState } from 'react'
-import { updateReported, Update } from './updateReported'
-import { sendSensorMessage } from './sendSensorMessage'
-import { BatchUpdate, batch } from './batch'
-import { UpdateUI } from './UpdateUI'
+import type { BatchUpdate } from './batch'
+import { batch } from './batch'
 import { Header } from './Header'
 import { sendMessage } from './sendMessage'
-import { Progress } from 'components/Progress'
-import classNames from 'classnames'
+import { sendSensorMessage } from './sendSensorMessage'
+import type { Update } from './updateReported'
+import { updateReported } from './updateReported'
+import { UpdateUI } from './UpdateUI'
 
 type QueuedUpdate = Update & { ts: number }
 
