@@ -11,9 +11,9 @@ export const Header = ({ children }: { children?: React.ReactNode }) => (
 						width="30"
 						height="30"
 						className="d-inline-block align-top me-1"
-						alt="Cat Tracker"
+						alt="nRF Asset Tracker"
 					/>
-					<span>Cat Tracker Simulator</span>
+					<span>nRF Asset Tracker Device Simulator UI</span>
 				</a>
 				{children}
 			</div>

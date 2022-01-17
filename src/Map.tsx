@@ -57,6 +57,15 @@ export const Map = ({
 		}
 	}, [hasGeoLocationApi, mapPosition.manual, onPositionChange])
 
+	const width = 37.80887
+	const height = 50.2832
+	const scaling = 0.7
+
+	const icon = Leaflet.icon({
+		iconUrl: '/marker.svg',
+		iconSize: new Leaflet.Point(width * scaling, height * scaling),
+		iconAnchor: new Leaflet.Point((width * scaling) / 2, height * scaling - 2),
+	})
 	return (
 		<div>
 			<MapContainer
@@ -80,14 +89,7 @@ export const Map = ({
 					attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 					url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
 				/>
-				<Marker
-					position={[mapPosition.lat, mapPosition.lng]}
-					icon={Leaflet.icon({
-						iconUrl: '/logo.svg',
-						iconSize: [50, 50],
-						iconAnchor: [25, 50],
-					})}
-				/>
+				<Marker position={[mapPosition.lat, mapPosition.lng]} icon={icon} />
 			</MapContainer>
 		</div>
 	)

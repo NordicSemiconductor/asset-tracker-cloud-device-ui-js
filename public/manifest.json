@@ -1,9 +1,9 @@
 {
-  "short_name": "Cat Tracker Simulator",
-  "name": "Web app to simulate a Cat Tracker",
+  "short_name": "nRF Asset Tracker Device Simulator UI",
+  "name": "Provides a user interface via a web application to interact with a simulated device for the nRF Asset Tracker.",
   "icons": [
     {
-      "src": "favicon.svg",
+      "src": "/logo.svg",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/svg+xml"
     }
