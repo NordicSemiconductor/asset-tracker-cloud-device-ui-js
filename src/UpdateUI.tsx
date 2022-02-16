@@ -29,7 +29,7 @@ export const UpdateUI = ({
 	const [hum, setHum] = useState(50)
 	const [atmp, setAtmp] = useState(1030)
 	const [rsrp, setRSRP] = useState(70)
-	const [nw, setNw] = useState('LTE-M GPS')
+	const [nw, setNw] = useState('LTE-M')
 	const [mcc, setMcc] = useState<string>('242')
 	const [mnc, setMnc] = useState<string>('02')
 	const [band, setBand] = useState<number>(3)
@@ -190,9 +190,7 @@ export const UpdateUI = ({
 										>
 											<option>LAN</option>
 											<option>WiFi</option>
-											<option>LTE-M GPS</option>
 											<option>LTE-M</option>
-											<option>NB-IoT GPS</option>
 											<option>NB-IoT</option>
 										</select>
 									</div>
