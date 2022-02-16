@@ -326,7 +326,7 @@ export const UpdateUI = ({
 												v: {
 													nw,
 													band,
-													mccmnc: `${mcc}${mnc.padStart(2, '0')}`,
+													mccmnc: parseInt(`${mcc}${mnc.padStart(2, '0')}`, 10),
 													cell,
 													area,
 													rsrp: -rsrp,
