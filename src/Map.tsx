@@ -6,7 +6,15 @@ import type {
 import Leaflet from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 import React, { useEffect, useState } from 'react'
-import { MapContainer, Marker, TileLayer, useMapEvents } from 'react-leaflet'
+import {
+	Circle,
+	MapConsumer,
+	MapContainer,
+	Marker,
+	Polyline,
+	TileLayer,
+	useMapEvents,
+} from 'react-leaflet'
 
 const EventHandler = ({
 	onZoomEnd,
@@ -24,8 +32,12 @@ const EventHandler = ({
 
 export const Map = ({
 	onPositionChange,
+	heading,
+	accuracy,
 }: {
 	onPositionChange: (args: { lat: number; lng: number }) => void
+	heading: number
+	accuracy: number
 }) => {
 	const [mapPosition, setMapPosition] = useState({
 		lat: 63.4210168,
@@ -67,30 +79,72 @@ export const Map = ({
 		iconAnchor: new Leaflet.Point((width * scaling) / 2, height * scaling - 2),
 	})
 	return (
-		<div>
-			<MapContainer
+		<MapContainer
+			center={[mapPosition.lat, mapPosition.lng]}
+			zoom={zoom}
+			style={{ height: '450px' }}
+		>
+			<EventHandler
+				onZoomEnd={({ map }) => {
+					setZoom(map.getZoom())
+				}}
+				onClick={({ event }) => {
+					setMapPosition({
+						...event.latlng,
+						manual: true,
+					})
+					onPositionChange(event.latlng)
+				}}
+			/>
+			<TileLayer
+				attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+				url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+			/>
+			<Marker position={[mapPosition.lat, mapPosition.lng]} icon={icon} />
+			<HeadingMarker
+				position={[mapPosition.lat, mapPosition.lng]}
+				heading={heading}
+				mapZoom={zoom}
+				color={'#00000080'}
+			/>
+			<Circle
 				center={[mapPosition.lat, mapPosition.lng]}
-				zoom={zoom}
-				style={{ height: '450px' }}
-			>
-				<EventHandler
-					onZoomEnd={({ map }) => {
-						setZoom(map.getZoom())
-					}}
-					onClick={({ event }) => {
-						setMapPosition({
-							...event.latlng,
-							manual: true,
-						})
-						onPositionChange(event.latlng)
-					}}
-				/>
-				<TileLayer
-					attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-					url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-				/>
-				<Marker position={[mapPosition.lat, mapPosition.lng]} icon={icon} />
-			</MapContainer>
-		</div>
+				radius={accuracy}
+				color={`#1f56d2`}
+			/>
+		</MapContainer>
 	)
 }
+
+const HeadingMarker = ({
+	heading,
+	position,
+	mapZoom,
+	color,
+}: {
+	position: Leaflet.LatLngExpression
+	heading: number
+	mapZoom: number
+	color?: string
+}) => (
+	<MapConsumer key={mapZoom}>
+		{(map) => {
+			const { x, y } = map.project(position, mapZoom)
+			const endpoint = map.unproject(
+				[
+					x + mapZoom * 3 * Math.cos((((heading - 90) % 360) * Math.PI) / 180),
+					y + mapZoom * 3 * Math.sin((((heading - 90) % 360) * Math.PI) / 180),
+				],
+				mapZoom,
+			)
+			return (
+				<Polyline
+					positions={[position, endpoint]}
+					weight={mapZoom > 16 ? 1 : 2}
+					lineCap={'round'}
+					color={color ?? '#000000'}
+				/>
+			)
+		}}
+	</MapConsumer>
+)

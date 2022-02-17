@@ -90,9 +90,9 @@ export const UI = ({ endpoint }: { endpoint: URL }) => {
 	return (
 		<>
 			<Header>
-				<form>
+				<form className="d-flex align-items-center">
 					{batchMode && (
-						<div className="input-group">
+						<div className="input-group me-2">
 							<input
 								className="form-control"
 								type="number"
@@ -110,11 +110,14 @@ export const UI = ({ endpoint }: { endpoint: URL }) => {
 					<button
 						type="button"
 						onClick={() => setBatchMode((m) => !m)}
-						className={classNames({
-							btn: true,
-							'btn-warning': batchMode,
-							'btn-outline-secondary': !batchMode,
-						})}
+						className={classNames(
+							{
+								btn: true,
+								'btn-warning': batchMode,
+								'btn-outline-secondary': !batchMode,
+							},
+							'text-nowrap',
+						)}
 					>
 						Batch mode
 						{batchUpdates.length > 0 && (

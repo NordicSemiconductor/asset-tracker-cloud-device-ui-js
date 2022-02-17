@@ -1,6 +1,7 @@
 import * as MccMncList from 'mcc-mnc-list'
 import React, { useState } from 'react'
 import { AGPS } from './AGPS'
+import { calculateHeading } from './calculateHeading'
 import { Device } from './Device'
 import { Map } from './Map'
 import { NCellMeas } from './NCellMeas'
@@ -24,7 +25,10 @@ export const UpdateUI = ({
 	const [hdg, setHdg] = useState(0)
 	const [spd, setSpd] = useState(0)
 	const [alt, setAlt] = useState(0)
-	const [location, setLocation] = useState({ lat: 0, lng: 0 })
+	const [location, setLocation] = useState<{ lat: number; lng: number }>({
+		lat: 0,
+		lng: 0,
+	})
 	const [temp, setTemp] = useState(21)
 	const [hum, setHum] = useState(50)
 	const [atmp, setAtmp] = useState(1030)
@@ -71,10 +75,9 @@ export const UpdateUI = ({
 										id="voltage"
 										min={0}
 										max={3300}
-										formatValue={Math.round}
 										value={batteryVoltage}
 										onChange={(v) => {
-											setBatteryVoltage(v)
+											setBatteryVoltage(Math.round(v))
 											u({
 												property: 'bat',
 												v,
@@ -93,9 +96,8 @@ export const UpdateUI = ({
 											min={-20}
 											max={80}
 											value={temp}
-											formatValue={Math.round}
 											onChange={(v) => {
-												setTemp(v)
+												setTemp(Math.round(v))
 											}}
 										/>
 									</div>
@@ -106,15 +108,8 @@ export const UpdateUI = ({
 											min={0}
 											max={100}
 											value={hum}
-											formatValue={Math.round}
 											onChange={(v) => {
-												setHum(v)
-												u({
-													property: 'env',
-													v: {
-														hum: v,
-													},
-												})
+												setHum(Math.round(v))
 											}}
 										/>
 									</div>
@@ -309,9 +304,8 @@ export const UpdateUI = ({
 											min={-110}
 											max={-70}
 											value={-rsrp}
-											formatValue={Math.round}
 											onChange={(v) => {
-												setRSRP(-v)
+												setRSRP(Math.round(-v))
 											}}
 										/>
 									</div>
@@ -347,9 +341,25 @@ export const UpdateUI = ({
 								<div className="card-body">
 									<div className="mb-3">
 										<Map
+											heading={hdg}
+											accuracy={accuracy}
 											onPositionChange={({ lat, lng }) => {
 												if (location.lng !== lng || location.lng !== lng) {
+													const lastLocation = { ...location }
+													setHdg(calculateHeading(lastLocation, { lat, lng }))
+
 													setLocation({ lat, lng })
+													u({
+														property: 'gnss',
+														v: {
+															lat: location.lat,
+															lng: location.lng,
+															acc: accuracy,
+															hdg,
+															spd,
+															alt,
+														},
+													})
 												}
 											}}
 										/>
@@ -363,6 +373,7 @@ export const UpdateUI = ({
 											onChange={(v) => {
 												setAccuracy(v)
 											}}
+											value={accuracy}
 										/>
 									</div>
 									<div className="mb-3">
@@ -374,6 +385,7 @@ export const UpdateUI = ({
 											onChange={(v) => {
 												setHdg(v)
 											}}
+											value={hdg}
 										/>
 									</div>
 									<div className="mb-3">
@@ -385,6 +397,7 @@ export const UpdateUI = ({
 											onChange={(v) => {
 												setSpd(v)
 											}}
+											value={spd}
 										/>
 									</div>
 									<div>
@@ -396,6 +409,7 @@ export const UpdateUI = ({
 											onChange={(v) => {
 												setAlt(v)
 											}}
+											value={alt}
 										/>
 									</div>
 								</div>
