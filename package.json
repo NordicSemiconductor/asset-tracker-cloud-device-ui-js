@@ -30,8 +30,8 @@
     "classnames": "2.3.1",
     "inter-ui": "3.19.3",
     "mcc-mnc-list": "1.1.8",
-    "react": "17.0.2",
-    "react-dom": "17.0.2",
+    "react": "18.0.0",
+    "react-dom": "18.0.0",
     "react-leaflet": "3.2.5"
   },
   "devDependencies": {
