@@ -32,7 +32,7 @@
     "mcc-mnc-list": "1.1.8",
     "react": "18.0.0",
     "react-dom": "18.0.0",
-    "react-leaflet": "3.2.5"
+    "react-leaflet": "4.0.0"
   },
   "devDependencies": {
     "@nordicsemiconductor/asset-tracker-cloud-code-style": "11.0.49",
