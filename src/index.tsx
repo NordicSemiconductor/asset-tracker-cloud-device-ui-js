@@ -1,5 +1,6 @@
-import * as React from 'react'
-import * as ReactDOM from 'react-dom'
+import { createRoot } from 'react-dom/client'
 import { DeviceUIApp } from './App'
 
-ReactDOM.render(<DeviceUIApp />, document.getElementById('root'))
+const container = document.getElementById('root') as HTMLElement
+const root = createRoot(container)
+root.render(<DeviceUIApp />)
