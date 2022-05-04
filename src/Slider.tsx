@@ -13,9 +13,8 @@ export const Slider = ({
 	value: number
 	onChange: (v: number) => any
 }) => {
-	const startValue = value ?? (max - min) / 2
 	const [sliderState, setSliderState] = useState(
-		Math.round(((startValue - min) / (max - min)) * 100),
+		Math.round(((value - min) / (max - min)) * 100),
 	)
 	return (
 		<input
