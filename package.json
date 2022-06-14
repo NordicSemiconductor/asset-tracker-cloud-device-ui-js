@@ -31,8 +31,8 @@
     "inter-ui": "3.19.3",
     "leaflet": "1.8.0",
     "mcc-mnc-list": "1.1.8",
-    "react": "18.1.0",
-    "react-dom": "18.1.0"
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
   },
   "devDependencies": {
     "@nordicsemiconductor/asset-tracker-cloud-code-style": "11.0.85",
