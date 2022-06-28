@@ -1,6 +1,6 @@
 import classNames from 'classnames'
 import { Progress } from 'components/Progress'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import type { BatchUpdate } from './batch'
 import { batch } from './batch'
 import { Header } from './Header'

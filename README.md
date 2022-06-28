@@ -8,10 +8,11 @@
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier/)
 [![ESLint: TypeScript](https://img.shields.io/badge/ESLint-TypeScript-blue.svg)](https://github.com/typescript-eslint/typescript-eslint)
 
-Provides a user interface via a web application to interact with a simulated device for the nRF Asset Tracker.
+Provides a user interface via a web application to interact with a simulated
+device for the nRF Asset Tracker.
 
-The simulated devices are provided for each cloud flavours of the
-nRF Asset Tracker:
+The simulated devices are provided for each cloud flavours of the nRF Asset
+Tracker:
 
 - [AWS](https://github.com/NordicSemiconductor/asset-tracker-cloud-aws-js)
 - [Azure](https://github.com/NordicSemiconductor/asset-tracker-cloud-azure-js)

@@ -1,6 +1,6 @@
 import Leaflet from 'leaflet'
 import 'leaflet/dist/leaflet.css'
-import React, { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 const width = 37.80887
 const height = 50.2832
