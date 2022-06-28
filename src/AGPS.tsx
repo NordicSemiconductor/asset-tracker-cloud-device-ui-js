@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useState } from 'react'
+import { useContext, useState } from 'react'
 import { MessageContext } from './Device'
 
 const AGPSDataTypes = {

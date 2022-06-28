@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { calculateHeading } from './calculateHeading'
 import { Map } from './Map'
 import { Slider } from './Slider'
