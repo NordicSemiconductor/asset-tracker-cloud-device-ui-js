@@ -30,6 +30,7 @@ export const UpdateUI = ({
 	const [band, setBand] = useState<number>(3)
 	const [cell, setCell] = useState<number>(33703719)
 	const [area, setArea] = useState<number>(12)
+	const [magnitude, setMagnitude] = useState<number>(1)
 
 	return (
 		<Device endpoint={endpoint}>
@@ -136,26 +137,6 @@ export const UpdateUI = ({
 									>
 										Send
 									</button>
-								</div>
-							</form>
-							<form className="card mt-4">
-								<div className="card-header">Buttons</div>
-								<div className="card-body d-flex flex-row justify-content-between">
-									{[...Array(4)].map((_, k) => (
-										<button
-											key={k}
-											className="btn btn-outline-secondary"
-											type="button"
-											onClick={() => {
-												s({
-													property: 'btn',
-													v: k + 1,
-												})
-											}}
-										>
-											Button {k + 1}
-										</button>
-									))}
 								</div>
 							</form>
 						</div>
@@ -316,6 +297,63 @@ export const UpdateUI = ({
 													area,
 													rsrp: -rsrp,
 												},
+											})
+										}}
+									>
+										Send
+									</button>
+								</div>
+							</form>
+						</div>
+					</div>
+					<div className="row justify-content-center">
+						<div className="col-12 col-md-8 col-lg-6 col-xl-5">
+							<form className="card mt-4">
+								<div className="card-header">Buttons</div>
+								<div className="card-body d-flex flex-row justify-content-between">
+									{[...Array(4)].map((_, k) => (
+										<button
+											key={k}
+											className="btn btn-outline-secondary"
+											type="button"
+											onClick={() => {
+												s({
+													property: 'btn',
+													v: k + 1,
+												})
+											}}
+										>
+											Button {k + 1}
+										</button>
+									))}
+								</div>
+							</form>
+						</div>
+						<div className="col-12 col-md-8 col-lg-6 col-xl-5">
+							<form className="card mt-4">
+								<div className="card-header">Impact</div>
+								<div className="card-body">
+									<div>
+										<label htmlFor="magnitude">Magnitude: {magnitude} G</label>
+										<Slider
+											id="magnitude"
+											min={0}
+											max={300}
+											value={magnitude}
+											onChange={(v) => {
+												setMagnitude(Math.round(v))
+											}}
+										/>
+									</div>
+								</div>
+								<div className="card-footer d-flex flex-row-reverse">
+									<button
+										type="button"
+										className="btn btn-primary"
+										onClick={() => {
+											s({
+												property: 'impact',
+												v: magnitude,
 											})
 										}}
 									>
