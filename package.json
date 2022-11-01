@@ -35,7 +35,7 @@
     "react-dom": "18.2.0"
   },
   "devDependencies": {
-    "@nordicsemiconductor/asset-tracker-cloud-code-style": "11.0.135",
+    "@nordicsemiconductor/asset-tracker-cloud-code-style": "11.0.137",
     "@types/leaflet": "1.9.0",
     "@types/react": "18.0.24",
     "@types/react-dom": "18.0.8",
