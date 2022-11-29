@@ -39,7 +39,7 @@
     "@types/leaflet": "1.9.0",
     "@types/react": "18.0.25",
     "@types/react-dom": "18.0.9",
-    "@types/uuid": "8.3.4",
+    "@types/uuid": "9.0.0",
     "@vitejs/plugin-react": "2.2.0",
     "eslint-config-react-app": "7.0.1",
     "vite": "3.2.4"
