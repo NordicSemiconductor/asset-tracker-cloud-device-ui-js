@@ -42,7 +42,7 @@
     "@types/uuid": "9.0.0",
     "@vitejs/plugin-react": "2.2.0",
     "eslint-config-react-app": "7.0.1",
-    "vite": "3.2.4"
+    "vite": "3.2.5"
   },
   "lint-staged": {
     "*.{ts,tsx}": [
