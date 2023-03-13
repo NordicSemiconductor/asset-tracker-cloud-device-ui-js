@@ -24,7 +24,7 @@
     "device-simulator"
   ],
   "author": "Nordic Semiconductor ASA | nordicsemi.no",
-  "license": "LICENSE",
+  "license": "BSD-3-Clause",
   "dependencies": {
     "bootstrap": "5.2.3",
     "classnames": "2.3.2",
