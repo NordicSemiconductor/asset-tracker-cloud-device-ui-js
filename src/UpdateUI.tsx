@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { AGPS } from './AGPS'
 import { Device } from './Device'
 import { GNSS } from './GNSS'
-import { NCellMeas } from './NCellMeas'
+import { NetworkSurvey } from './NetworkSurvey'
 import { PGPS } from './PGPS'
 import { Slider } from './Slider'
 import type { Update } from './updateReported'
@@ -376,7 +376,7 @@ export const UpdateUI = ({
 								cell={cell ?? 33703719}
 								area={area ?? 12}
 							/>
-							<NCellMeas sendMessage={m} />
+							<NetworkSurvey sendMessage={m} />
 						</div>
 					</div>
 				</>
