@@ -12,7 +12,7 @@
     "noEmit": true,
     "jsx": "preserve",
     "noFallthroughCasesInSwitch": true,
-    "importsNotUsedAsValues": "error",
+    "verbatimModuleSyntax": true,
     "baseUrl": "src",
     "paths": {
       "components/*": ["components/*"]
