@@ -26,6 +26,8 @@
   "author": "Nordic Semiconductor ASA | nordicsemi.no",
   "license": "BSD-3-Clause",
   "dependencies": {
+    "@nordicsemiconductor/asset-tracker-cloud-docs": "28.1.6",
+    "@sinclair/typebox": "0.25.24",
     "bootstrap": "5.2.3",
     "classnames": "2.3.2",
     "inter-ui": "3.19.3",

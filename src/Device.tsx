@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useSettings } from './context/SettingsContext'
 import { trimSlash } from './trimSlash'
 
 export const MessageContext = React.createContext<{
@@ -9,12 +10,11 @@ export const MessageContext = React.createContext<{
 }>({ messages: [] })
 
 export const Device = ({
-	endpoint,
 	children,
 }: {
-	endpoint: URL
 	children: (args: { deviceId?: string; config: any }) => JSX.Element | null
 }): JSX.Element | null => {
+	const { endpoint } = useSettings()
 	const [deviceId, setDeviceId] = useState<string>()
 	const [config, setConfig] = useState()
 	const [messages, setMessages] = useState<

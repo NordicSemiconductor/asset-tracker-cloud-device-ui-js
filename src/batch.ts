@@ -1,6 +1,8 @@
+import type { Batch } from '@nordicsemiconductor/asset-tracker-cloud-docs/protocol'
+import type { Static } from '@sinclair/typebox'
 import { trimSlash } from './trimSlash'
 
-export type BatchUpdate = Record<string, { v: any; ts: number }[]>
+export type BatchUpdate = Static<typeof Batch>
 
 export const batch =
 	({ endpoint }: { endpoint: URL }) =>

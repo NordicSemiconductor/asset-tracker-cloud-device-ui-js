@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { SettingsProvider } from './context/SettingsContext'
 import { SelectEndpoint } from './SelectEndpoint'
 import { UI } from './UI'
 
@@ -19,7 +20,11 @@ export const DeviceUIApp = () => {
 	return (
 		<>
 			{endpoint === undefined && <SelectEndpoint onEndpoint={setEndpoint} />}
-			{endpoint && <UI endpoint={endpoint} />}
+			{endpoint && (
+				<SettingsProvider endpoint={endpoint}>
+					<UI />
+				</SettingsProvider>
+			)}
 		</>
 	)
 }

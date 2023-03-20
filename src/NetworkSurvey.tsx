@@ -1,11 +1,18 @@
+import type {
+	NeighboringCellMeasurements,
+	NetworkSurvey as NetworkSurveyMessage,
+	WiFiSiteSurvey,
+} from '@nordicsemiconductor/asset-tracker-cloud-docs/protocol'
+import type { Static } from '@sinclair/typebox'
 import { useState } from 'react'
+import { useSettings } from './context/SettingsContext'
+import { sendMessage } from './sendMessage'
 
-export const NetworkSurvey = ({
-	sendMessage: m,
-}: {
-	sendMessage: (message: Record<string, any>, topic: string) => void
-}) => {
-	const [lte, setNcellmeas] = useState({
+export const NetworkSurvey = () => {
+	const { endpoint } = useSettings()
+	const [lte, setNcellmeas] = useState<
+		Static<typeof NeighboringCellMeasurements>
+	>({
 		mcc: 242,
 		mnc: 2,
 		cell: 21679716,
@@ -28,9 +35,10 @@ export const NetworkSurvey = ({
 				rsrq: -11,
 			},
 		],
+		ts: Date.now(),
 	})
 
-	const [wifi, setWiFi] = useState<{ aps: string[]; ts: number }>({
+	const [wifi, setWiFi] = useState<Static<typeof WiFiSiteSurvey>>({
 		aps: [
 			'4ce175805e6f',
 			'4ce175805e6e',
@@ -106,7 +114,8 @@ export const NetworkSurvey = ({
 					type="button"
 					className="btn btn-primary"
 					onClick={() => {
-						m({ lte, wifi }, 'ground-fix')
+						const m: Static<typeof NetworkSurveyMessage> = { lte, wifi }
+						sendMessage({ endpoint })(m, 'ground-fix').catch(console.error)
 					}}
 				>
 					Send Network Survey

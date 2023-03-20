@@ -6,18 +6,14 @@ import { GNSS } from './GNSS'
 import { NetworkSurvey } from './NetworkSurvey'
 import { PGPS } from './PGPS'
 import { Slider } from './Slider'
-import type { Update } from './updateReported'
+import type { SensorMessage, Update } from './updateReported'
 
 export const UpdateUI = ({
-	endpoint,
 	updateReported: u,
-	sendSensorMessage: s,
-	sendMessage: m,
+	sensorMessage: s,
 }: {
-	endpoint: URL
 	updateReported: (u: Update) => void
-	sendSensorMessage: (m: Update) => void
-	sendMessage: (m: Record<string, any>, t: string) => void
+	sensorMessage: (m: SensorMessage) => void
 }) => {
 	const [batteryVoltage, setBatteryVoltage] = useState(0)
 	const [temp, setTemp] = useState(21)
@@ -33,7 +29,7 @@ export const UpdateUI = ({
 	const [magnitude, setMagnitude] = useState<number>(1)
 
 	return (
-		<Device endpoint={endpoint}>
+		<Device>
 			{({ deviceId, config }) => (
 				<>
 					<div className="row justify-content-center">
@@ -71,8 +67,7 @@ export const UpdateUI = ({
 										onChange={(v) => {
 											setBatteryVoltage(Math.round(v))
 											u({
-												property: 'bat',
-												v,
+												bat: { v, ts: Date.now() },
 											})
 										}}
 									/>
@@ -126,11 +121,13 @@ export const UpdateUI = ({
 										className="btn btn-primary"
 										onClick={() => {
 											u({
-												property: 'env',
-												v: {
-													hum,
-													temp,
-													atmp: atmp / 10, // device reports in kPa
+												env: {
+													v: {
+														hum,
+														temp,
+														atmp: atmp / 10, // device reports in kPa
+													},
+													ts: Date.now(),
 												},
 											})
 										}}
@@ -288,14 +285,20 @@ export const UpdateUI = ({
 										className="btn btn-primary"
 										onClick={() => {
 											u({
-												property: 'roam',
-												v: {
-													nw,
-													band,
-													mccmnc: parseInt(`${mcc}${mnc.padStart(2, '0')}`, 10),
-													cell,
-													area,
-													rsrp: -rsrp,
+												roam: {
+													v: {
+														nw,
+														band,
+														mccmnc: parseInt(
+															`${mcc}${mnc.padStart(2, '0')}`,
+															10,
+														),
+														cell,
+														area,
+														rsrp: -rsrp,
+														ip: '0.0.0.0',
+													},
+													ts: Date.now(),
 												},
 											})
 										}}
@@ -318,8 +321,10 @@ export const UpdateUI = ({
 											type="button"
 											onClick={() => {
 												s({
-													property: 'btn',
-													v: k + 1,
+													btn: {
+														v: k + 1,
+														ts: Date.now(),
+													},
 												})
 											}}
 										>
@@ -352,8 +357,10 @@ export const UpdateUI = ({
 										className="btn btn-primary"
 										onClick={() => {
 											s({
-												property: 'impact',
-												v: magnitude,
+												impact: {
+													v: magnitude,
+													ts: Date.now(),
+												},
 											})
 										}}
 									>
@@ -365,18 +372,17 @@ export const UpdateUI = ({
 					</div>
 					<div className="row justify-content-center">
 						<div className="col-12 col-md-8 col-lg-6 col-xl-5">
-							<GNSS updateReported={u} />
+							<GNSS onUpdate={(gnss) => u({ gnss })} />
 						</div>
 						<div className="col-12 col-md-8 col-lg-6 col-xl-5">
-							<PGPS sendMessage={m} />
+							<PGPS />
 							<AGPS
-								sendMessage={m}
 								mnc={parseInt(mnc ?? '2', 10)}
 								mcc={parseInt(mcc ?? '242', 10)}
 								cell={cell ?? 33703719}
 								area={area ?? 12}
 							/>
-							<NetworkSurvey sendMessage={m} />
+							<NetworkSurvey />
 						</div>
 					</div>
 				</>

@@ -1,5 +1,9 @@
+import type { AGPSRequest } from '@nordicsemiconductor/asset-tracker-cloud-docs/protocol'
+import type { Static } from '@sinclair/typebox'
 import { useContext, useState } from 'react'
+import { useSettings } from './context/SettingsContext'
 import { MessageContext } from './Device'
+import { sendMessage } from './sendMessage'
 
 const AGPSDataTypes = {
 	1: 'UTC parameters',
@@ -13,20 +17,18 @@ const AGPSDataTypes = {
 }
 
 export const AGPS = ({
-	sendMessage: m,
 	mcc,
 	mnc,
 	cell,
 	area,
 }: {
-	sendMessage: (message: Record<string, any>, topic: string) => void
 	mcc: number
 	mnc: number
 	cell: number
 	area: number
 }) => {
+	const { endpoint } = useSettings()
 	const [types, setTypes] = useState<number[]>([1, 2, 3, 4, 6, 7, 8, 9])
-
 	const { messages } = useContext(MessageContext)
 	const agpsMessages = messages.filter(({ topic }) => topic.endsWith('/agps'))
 
@@ -71,16 +73,14 @@ export const AGPS = ({
 					type="button"
 					className="btn btn-primary"
 					onClick={() => {
-						m(
-							{
-								mcc,
-								mnc,
-								cell,
-								area,
-								types: types ?? [1, 2, 3, 4, 6, 7, 8, 9],
-							},
-							'agps/get',
-						)
+						const m: Static<typeof AGPSRequest> = {
+							mcc,
+							mnc,
+							cell,
+							area,
+							types: types ?? [1, 2, 3, 4, 6, 7, 8, 9],
+						}
+						sendMessage({ endpoint })(m, 'agps/get').catch(console.error)
 					}}
 				>
 					Request A-GPS data

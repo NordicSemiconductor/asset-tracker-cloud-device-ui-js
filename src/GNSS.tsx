@@ -1,15 +1,16 @@
+import type { AWSReported } from '@nordicsemiconductor/asset-tracker-cloud-docs/protocol'
+import type { Static } from '@sinclair/typebox'
 import { useState } from 'react'
 import { calculateHeading } from './calculateHeading'
 import { Map } from './Map'
 import { Slider } from './Slider'
-import type { Update } from './updateReported'
 
 type Position = { lat: number; lng: number }
 
 export const GNSS = ({
-	updateReported: u,
+	onUpdate,
 }: {
-	updateReported: (u: Update) => void
+	onUpdate: (gnss: Static<typeof AWSReported>['gnss']) => unknown
 }) => {
 	const [accuracy, setAccuracy] = useState(0)
 	const [hdg, setHdg] = useState(0)
@@ -32,8 +33,7 @@ export const GNSS = ({
 							if (location.lng !== lng || location.lng !== lng) {
 								const lastLocation = { ...location }
 								const hdg = calculateHeading(lastLocation, { lat, lng })
-								u({
-									property: 'gnss',
+								onUpdate({
 									v: {
 										lat,
 										lng,
@@ -42,6 +42,7 @@ export const GNSS = ({
 										spd,
 										alt,
 									},
+									ts: Date.now(),
 								})
 								setHdg(hdg)
 								setLocation({ lat, lng })
@@ -104,8 +105,7 @@ export const GNSS = ({
 					type="button"
 					className="btn btn-primary"
 					onClick={() => {
-						u({
-							property: 'gnss',
+						onUpdate({
 							v: {
 								lat: location.lat,
 								lng: location.lng,
@@ -114,6 +114,7 @@ export const GNSS = ({
 								spd,
 								alt,
 							},
+							ts: Date.now(),
 						})
 					}}
 				>

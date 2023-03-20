@@ -1,22 +1,22 @@
+import type { Batch } from '@nordicsemiconductor/asset-tracker-cloud-docs/protocol'
+import type { Static } from '@sinclair/typebox'
 import classNames from 'classnames'
 import { Progress } from 'components/Progress'
 import { useEffect, useState } from 'react'
-import type { BatchUpdate } from './batch'
 import { batch } from './batch'
+import { useSettings } from './context/SettingsContext'
 import { Header } from './Header'
+import { mergeBatch } from './mergeBatch'
 import { sendMessage } from './sendMessage'
-import { sendSensorMessage } from './sendSensorMessage'
-import type { Update } from './updateReported'
-import { updateReported } from './updateReported'
+import { SensorMessage, Update, updateReported } from './updateReported'
 import { UpdateUI } from './UpdateUI'
 
-type QueuedUpdate = Update & { ts: number }
-
-export const UI = ({ endpoint }: { endpoint: URL }) => {
+export const UI = () => {
+	const { endpoint } = useSettings()
 	const [error, setError] = useState<Error>()
 	const [batchMode, setBatchMode] = useState(false)
 	const [timeLeft, setTimeLeft] = useState<number>()
-	const [batchUpdates, setBatchUpdates] = useState<QueuedUpdate[]>([])
+	const [batchUpdates, setBatchUpdates] = useState<Static<typeof Batch>>({})
 	const [batchTimeout, setBatchTimeout] = useState<NodeJS.Timeout>()
 	const [scheduledSendTime, setScheduledSendTime] = useState<number>()
 	const [intervalSeconds, setIntervalSeconds] = useState<number>(1)
@@ -37,15 +37,9 @@ export const UI = ({ endpoint }: { endpoint: URL }) => {
 		}
 	}, [scheduledSendTime])
 
-	const queueUpdate = (update: Update) => {
+	const queueUpdate = (update: Update | SensorMessage) => {
 		setBatchMode(true)
-		setBatchUpdates((updates) => [
-			...updates,
-			{
-				...update,
-				ts: Date.now(),
-			},
-		])
+		setBatchUpdates((updates) => mergeBatch(updates, update))
 		if (batchTimeout !== undefined) clearTimeout(batchTimeout)
 		setScheduledSendTime(Date.now() + intervalSeconds * 1000)
 		setTimeoutIntervalSeconds(intervalSeconds)
@@ -54,38 +48,12 @@ export const UI = ({ endpoint }: { endpoint: URL }) => {
 				setScheduledSendTime(undefined)
 				setBatchUpdates((updates) => {
 					console.log(updates)
-					const update = updates.reduce(
-						(update, message) => ({
-							...update,
-							[message.property]: [
-								...(update[message.property] ?? []),
-								{
-									v: message.v,
-									ts: message.ts,
-								},
-							],
-						}),
-						{} as BatchUpdate,
-					)
-					batch({ endpoint })(update).catch(setError)
-					return []
+					batch({ endpoint })(updates).catch(setError)
+					return {}
 				})
 			}, intervalSeconds * 1000),
 		)
 	}
-
-	const u = batchMode
-		? queueUpdate
-		: (u: Update) => {
-				updateReported({ endpoint })(u).catch(setError)
-		  }
-	const s = batchMode
-		? queueUpdate
-		: (u: Update) => {
-				sendSensorMessage({ endpoint })(u).catch(setError)
-		  }
-
-	const m = sendMessage({ endpoint })
 
 	return (
 		<>
@@ -120,9 +88,12 @@ export const UI = ({ endpoint }: { endpoint: URL }) => {
 						)}
 					>
 						Batch mode
-						{batchUpdates.length > 0 && (
+						{Object.keys(batchUpdates).length > 0 && (
 							<span className={'badge badge-primary pill-rounded'}>
-								{batchUpdates.length}
+								{Object.values(batchUpdates).reduce(
+									(total, prop) => total + prop.length,
+									0,
+								)}
 							</span>
 						)}
 					</button>
@@ -140,10 +111,20 @@ export const UI = ({ endpoint }: { endpoint: URL }) => {
 					</div>
 				)}
 				<UpdateUI
-					endpoint={endpoint}
-					updateReported={u}
-					sendSensorMessage={s}
-					sendMessage={m}
+					updateReported={(update) => {
+						if (batchMode) {
+							queueUpdate(update)
+						} else {
+							updateReported({ endpoint })(update).catch(setError)
+						}
+					}}
+					sensorMessage={(message) => {
+						if (batchMode) {
+							queueUpdate(message)
+						} else {
+							sendMessage({ endpoint })(message, 'message').catch(setError)
+						}
+					}}
 				/>
 			</main>
 		</>

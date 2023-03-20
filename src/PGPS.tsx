@@ -1,13 +1,14 @@
+import type { PGPSRequest } from '@nordicsemiconductor/asset-tracker-cloud-docs/protocol'
+import type { Static } from '@sinclair/typebox'
 import { useContext, useState } from 'react'
+import { useSettings } from './context/SettingsContext'
 import { MessageContext } from './Device'
+import { sendMessage } from './sendMessage'
 
 type Interval = 120 | 240 | 360 | 480
 
-export const PGPS = ({
-	sendMessage: m,
-}: {
-	sendMessage: (message: Record<string, any>, topic: string) => void
-}) => {
+export const PGPS = () => {
+	const { endpoint } = useSettings()
 	const [numPredictions, setNumPredictions] = useState(42)
 	const [interval, setInterval] = useState<Interval>(240)
 	const { messages } = useContext(MessageContext)
@@ -75,7 +76,11 @@ export const PGPS = ({
 					type="button"
 					className="btn btn-primary"
 					onClick={() => {
-						m({ n: numPredictions, int: interval }, 'pgps/get')
+						const m: Static<typeof PGPSRequest> = {
+							n: numPredictions,
+							int: interval,
+						}
+						sendMessage({ endpoint })(m, 'pgps/get').catch(console.error)
 					}}
 				>
 					Request P-GPS data
