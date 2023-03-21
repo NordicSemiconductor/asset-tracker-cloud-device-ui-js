@@ -1,4 +1,9 @@
-import { createContext, FunctionComponent, ReactNode, useContext } from 'react'
+import {
+	createContext,
+	useContext,
+	type FunctionComponent,
+	type ReactNode,
+} from 'react'
 
 export type Settings = {
 	endpoint: URL
