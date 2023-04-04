@@ -32,7 +32,7 @@
     "classnames": "2.3.2",
     "inter-ui": "3.19.3",
     "leaflet": "1.9.3",
-    "mcc-mnc-list": "1.1.10",
+    "mcc-mnc-list": "1.1.11",
     "react": "18.2.0",
     "react-dom": "18.2.0"
   },
