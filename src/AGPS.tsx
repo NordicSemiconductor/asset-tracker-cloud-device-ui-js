@@ -1,8 +1,8 @@
 import type { AGPSRequest } from '@nordicsemiconductor/asset-tracker-cloud-docs/protocol'
 import type { Static } from '@sinclair/typebox'
 import { useContext, useState } from 'react'
-import { useSettings } from './context/SettingsContext'
 import { MessageContext } from './Device'
+import { useSettings } from './context/SettingsContext'
 import { sendMessage } from './sendMessage'
 
 const AGPSDataTypes = {

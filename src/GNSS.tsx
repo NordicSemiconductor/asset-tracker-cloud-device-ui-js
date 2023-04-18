@@ -1,9 +1,9 @@
 import type { AWSReported } from '@nordicsemiconductor/asset-tracker-cloud-docs/protocol'
 import type { Static } from '@sinclair/typebox'
 import { useState } from 'react'
-import { calculateHeading } from './calculateHeading'
 import { Map } from './Map'
 import { Slider } from './Slider'
+import { calculateHeading } from './calculateHeading'
 
 type Position = { lat: number; lng: number }
 
