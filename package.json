@@ -44,7 +44,7 @@
     "@vitejs/plugin-react": "4.0.0",
     "eslint-config-react-app": "7.0.1",
     "typescript": "5.0.4",
-    "vite": "4.3.4"
+    "vite": "4.3.5"
   },
   "lint-staged": {
     "*.{ts,tsx}": [
