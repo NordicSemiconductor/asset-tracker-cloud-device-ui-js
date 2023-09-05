@@ -27,7 +27,7 @@
   "license": "BSD-3-Clause",
   "dependencies": {
     "@nordicsemiconductor/asset-tracker-cloud-docs": "29.0.7",
-    "@sinclair/typebox": "0.31.10",
+    "@sinclair/typebox": "0.31.14",
     "bootstrap": "5.3.1",
     "classnames": "2.3.2",
     "inter-ui": "3.19.3",
