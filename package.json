@@ -38,7 +38,7 @@
   },
   "devDependencies": {
     "@nordicsemiconductor/asset-tracker-cloud-code-style": "12.0.88",
-    "@types/leaflet": "1.9.5",
+    "@types/leaflet": "1.9.6",
     "@types/react": "18.2.22",
     "@types/react-dom": "18.2.7",
     "@vitejs/plugin-react": "4.0.4",
