@@ -37,6 +37,7 @@
     "react-dom": "18.2.0"
   },
   "devDependencies": {
+    "@commitlint/config-conventional": "17.8.0",
     "@nordicsemiconductor/asset-tracker-cloud-code-style": "12.0.98",
     "@types/leaflet": "1.9.6",
     "@types/react": "18.2.28",
