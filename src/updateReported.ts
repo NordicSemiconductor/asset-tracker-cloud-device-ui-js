@@ -3,7 +3,7 @@ import type {
 	Message,
 } from '@nordicsemiconductor/asset-tracker-cloud-docs/protocol'
 import type { Static } from '@sinclair/typebox'
-import { trimSlash } from './trimSlash'
+import { trimSlash } from './trimSlash.js'
 
 export type Update = Static<typeof AWSReported>
 export type SensorMessage = Static<typeof Message>

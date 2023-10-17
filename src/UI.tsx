@@ -3,17 +3,17 @@ import type { Static } from '@sinclair/typebox'
 import classNames from 'classnames'
 import { Progress } from 'components/Progress'
 import { useEffect, useState } from 'react'
-import { Header } from './Header'
-import { UpdateUI } from './UpdateUI'
-import { batch } from './batch'
-import { useSettings } from './context/SettingsContext'
-import { mergeBatch } from './mergeBatch'
-import { sendMessage } from './sendMessage'
+import { Header } from './Header.js'
+import { UpdateUI } from './UpdateUI.js'
+import { batch } from './batch.js'
+import { useSettings } from './context/SettingsContext.js'
+import { mergeBatch } from './mergeBatch.js'
+import { sendMessage } from './sendMessage.js'
 import {
 	updateReported,
 	type SensorMessage,
 	type Update,
-} from './updateReported'
+} from './updateReported.js'
 
 export const UI = () => {
 	const { endpoint } = useSettings()

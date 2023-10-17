@@ -1,6 +1,6 @@
 import type { Batch } from '@nordicsemiconductor/asset-tracker-cloud-docs/protocol'
 import type { Static } from '@sinclair/typebox'
-import { trimSlash } from './trimSlash'
+import { trimSlash } from './trimSlash.js'
 
 export type BatchUpdate = Static<typeof Batch>
 

@@ -1,6 +1,6 @@
 import type { Batch } from '@nordicsemiconductor/asset-tracker-cloud-docs/protocol'
 import type { Static } from '@sinclair/typebox'
-import type { SensorMessage, Update } from './updateReported'
+import type { SensorMessage, Update } from './updateReported.js'
 
 export const mergeBatch = (
 	updates: Static<typeof Batch>,
@@ -11,6 +11,6 @@ export const mergeBatch = (
 			({
 				...updates,
 				[k]: [...(updates[k as keyof Static<typeof Batch>] ?? []), v],
-			} as Static<typeof Batch>),
+			}) as Static<typeof Batch>,
 		updates,
 	)

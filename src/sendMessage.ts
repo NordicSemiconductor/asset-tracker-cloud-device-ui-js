@@ -1,4 +1,4 @@
-import { trimSlash } from './trimSlash'
+import { trimSlash } from './trimSlash.js'
 
 export const sendMessage =
 	({ endpoint }: { endpoint: URL }) =>

@@ -1,6 +1,5 @@
 {
   "extends": [
-    "react-app",
     "@nordicsemiconductor/eslint-config-asset-tracker-cloud-typescript"
   ],
   "overrides": [

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { useSettings } from './context/SettingsContext'
-import { trimSlash } from './trimSlash'
+import { useSettings } from './context/SettingsContext.js'
+import { trimSlash } from './trimSlash.js'
 
 export const MessageContext = React.createContext<{
 	messages: {

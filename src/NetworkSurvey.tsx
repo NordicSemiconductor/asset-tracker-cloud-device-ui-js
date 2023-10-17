@@ -5,8 +5,8 @@ import type {
 } from '@nordicsemiconductor/asset-tracker-cloud-docs/protocol'
 import type { Static } from '@sinclair/typebox'
 import { useState } from 'react'
-import { useSettings } from './context/SettingsContext'
-import { sendMessage } from './sendMessage'
+import { useSettings } from './context/SettingsContext.js'
+import { sendMessage } from './sendMessage.js'
 
 export const NetworkSurvey = () => {
 	const { endpoint } = useSettings()

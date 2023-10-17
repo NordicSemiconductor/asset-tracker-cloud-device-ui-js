@@ -1,12 +1,12 @@
 import * as MccMncList from 'mcc-mnc-list'
 import React, { useState } from 'react'
-import { AGPS } from './AGPS'
-import { Device } from './Device'
-import { GNSS } from './GNSS'
-import { NetworkSurvey } from './NetworkSurvey'
-import { PGPS } from './PGPS'
-import { Slider } from './Slider'
-import type { SensorMessage, Update } from './updateReported'
+import { AGPS } from './AGPS.js'
+import { Device } from './Device.js'
+import { GNSS } from './GNSS.js'
+import { NetworkSurvey } from './NetworkSurvey.js'
+import { PGPS } from './PGPS.js'
+import { Slider } from './Slider.js'
+import type { SensorMessage, Update } from './updateReported.js'
 
 export const UpdateUI = ({
 	updateReported: u,
