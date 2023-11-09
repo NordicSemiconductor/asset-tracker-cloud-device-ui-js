@@ -1,6 +1,6 @@
 import * as MccMncList from 'mcc-mnc-list'
 import React, { useState } from 'react'
-import { AGPS } from './AGPS.js'
+import { AGNSS } from './AGNSS.js'
 import { Device } from './Device.js'
 import { GNSS } from './GNSS.js'
 import { NetworkSurvey } from './NetworkSurvey.js'
@@ -376,7 +376,7 @@ export const UpdateUI = ({
 						</div>
 						<div className="col-12 col-md-8 col-lg-6 col-xl-5">
 							<PGPS />
-							<AGPS
+							<AGNSS
 								mnc={parseInt(mnc ?? '2', 10)}
 								mcc={parseInt(mcc ?? '242', 10)}
 								cell={cell ?? 33703719}
