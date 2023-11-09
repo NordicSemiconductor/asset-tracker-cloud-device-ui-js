@@ -1,11 +1,11 @@
-import type { AGPSRequest } from '@nordicsemiconductor/asset-tracker-cloud-docs/protocol'
+import type { AGNSSRequest } from '@nordicsemiconductor/asset-tracker-cloud-docs/protocol'
 import type { Static } from '@sinclair/typebox'
 import { useContext, useState } from 'react'
 import { MessageContext } from './Device.js'
 import { useSettings } from './context/SettingsContext.js'
 import { sendMessage } from './sendMessage.js'
 
-const AGPSDataTypes = {
+const AGNSSDataTypes = {
 	1: 'UTC parameters',
 	2: 'Ephemerides',
 	3: 'Almanac',
@@ -16,7 +16,7 @@ const AGPSDataTypes = {
 	9: 'Satellite integrity data',
 }
 
-export const AGPS = ({
+export const AGNSS = ({
 	mcc,
 	mnc,
 	cell,
@@ -30,14 +30,14 @@ export const AGPS = ({
 	const { endpoint } = useSettings()
 	const [types, setTypes] = useState<number[]>([1, 2, 3, 4, 6, 7, 8, 9])
 	const { messages } = useContext(MessageContext)
-	const agpsMessages = messages.filter(({ topic }) => topic.endsWith('/agps'))
+	const agnssMessages = messages.filter(({ topic }) => topic.endsWith('/agnss'))
 
 	return (
 		<form className="card mt-4">
 			<div className="card-header">Assisted GPS</div>
 			<div className="card-body">
 				<fieldset className="mb-3">
-					{Object.entries(AGPSDataTypes).map(([k, v]) => {
+					{Object.entries(AGNSSDataTypes).map(([k, v]) => {
 						const t = parseInt(k, 10)
 						return (
 							<div className="form-check" key={k}>
@@ -60,9 +60,9 @@ export const AGPS = ({
 						)
 					})}
 				</fieldset>
-				{agpsMessages.length > 0 && (
+				{agnssMessages.length > 0 && (
 					<ul>
-						{agpsMessages.map(({ payload }, k) => (
+						{agnssMessages.map(({ payload }, k) => (
 							<li key={k}>{payload.length} bytes</li>
 						))}
 					</ul>
@@ -73,14 +73,14 @@ export const AGPS = ({
 					type="button"
 					className="btn btn-primary"
 					onClick={() => {
-						const m: Static<typeof AGPSRequest> = {
+						const m: Static<typeof AGNSSRequest> = {
 							mcc,
 							mnc,
 							cell,
 							area,
 							types: types ?? [1, 2, 3, 4, 6, 7, 8, 9],
 						}
-						sendMessage({ endpoint })(m, 'agps/get').catch(console.error)
+						sendMessage({ endpoint })(m, 'agnss/get').catch(console.error)
 					}}
 				>
 					Request A-GPS data
